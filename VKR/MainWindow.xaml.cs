@@ -86,7 +86,6 @@ namespace VKR
             Grid.SetColumn(t, 1);
 
             
-            
             l.Width = 200;
             l.Height = 30;
             l.HorizontalAlignment = HorizontalAlignment.Left;
