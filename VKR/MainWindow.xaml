@@ -5,50 +5,77 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VKR"
         mc:Ignorable="d"
-        Title="Eeee" Height="550" Width="1010" >
-    
+        Icon="C:\Users\byrak\source\repos\VKR\VKR\мм.jpg"
+        Title="Eeee" Height="550" Width="1010"   Background="#FFBFBEBE"  ><!--WindowStyle="None" ResizeMode="NoResize"-->
+
     <Window.Resources>
+
         <Style TargetType="Button">
             <Setter Property="FontFamily" Value="Verdana" />
-            <Setter Property="Background" Value="#FFE7F7F6" />
-            <Setter Property="Foreground" Value="#FF343333" />
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#374137" />
             <Setter Property="Margin" Value="5" />
             <Setter Property="BorderBrush" Value="#FFB8B6B6"/>
             <Setter Property="FontStyle" Value="Italic"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="12"/>
+            <!--<Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#FFCFC9C9"  Direction="300"/>
+                </Setter.Value>
+            </Setter>-->
         </Style>
 
         <Style TargetType="Label">
             <Setter Property="FontFamily" Value="Verdana" />
-            <Setter Property="Foreground" Value="#FF343333" />
+            <Setter Property="Foreground" Value="#374137" />
             <Setter Property="Margin" Value="50 0" />
             <Setter Property="FontStyle" Value="Italic"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="12"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <!--<Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#FFF7F5F5" ShadowDepth="6" BlurRadius="8" Direction="1000"/>
+                </Setter.Value>
+            </Setter>-->
         </Style>
 
         <Style TargetType="TextBox">
-            <Setter Property="FontWeight" Value="Bold"/>
+            <!--<Setter Property="FontWeight" Value="DemiBold"/>-->
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="Width" Value="32"/>
             <Setter Property="Height" Value="20"/>
+            <!--<Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#FFF3EFEF" BlurRadius="10" Direction="300"/>
+                </Setter.Value>
+            </Setter>-->
         </Style>
+
         <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="IsEditable" Value="True"/>
+            <Setter Property="IsTextSearchEnabled" Value="True"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="Width" Value="36"/>
             <Setter Property="Height" Value="30"/>
+            <!--<Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#FFF7F5F5"   BlurRadius="10" Direction="300"/>
+                </Setter.Value>
+            </Setter>-->
         </Style>
-        
     </Window.Resources>
-    
+
+
     <Grid Name="lol" Background="MintCream">
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition  Width="1.2*"></ColumnDefinition>
             <ColumnDefinition Width="4*"></ColumnDefinition>
@@ -56,6 +83,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="1"></RowDefinition>
             <RowDefinition ></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="1.5*"></RowDefinition>
@@ -63,27 +91,32 @@
             <RowDefinition Height="1.5*"></RowDefinition>
             <RowDefinition Height="1.5*"></RowDefinition>
             <RowDefinition Height="1.5*"></RowDefinition>
-            <RowDefinition Height="8*"></RowDefinition> 
+            <RowDefinition Height="8*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Content="Ввести: /" Grid.Row="0"  FontSize="15"/>
-        <Label Content="Перевести в:"  Grid.Row="1" Margin="30 0 " FontSize="15"/>
-        
-        <Button Grid.Row="2" Name="matrixB"  Content="Матрицy"   Click="matrixB_Click"/>
-        <Button Grid.Row="3" Name="patternB"  Content="Схемy"  Click="patternB_Click"/>
-        <Button Grid.Row="4" Name="vneshMB"  Content="Произведения" Click="vneshMB_Click" />
-        <Button Grid.Row="6" Name="tenzerMB"   Content="Основные элементы" Click="TenzerMB_Click" />
-        <Button Grid.Row="7" VerticalAlignment="Bottom" Height="40"  Name="del1" Margin="25"  Content="Отчистить" Click="Del1_Click"/>
+        <Label Content="Ввести: /" Grid.Row="1"  FontSize="15"/>
+        <Label Content="Перевести в:"  Grid.Row="2" Margin="30 0 " FontSize="15"/>
+
+        <Button Grid.Row="3" Name="matrixB"  Content="Матрицy"   Click="matrixB_Click"/>
+        <Button Grid.Row="4" Name="patternB"  Content="Схемy"  Click="patternB_Click"/>
+        <Button Grid.Row="5" Name="vneshMB"  Content="Произведения" Click="vneshMB_Click" />
+        <Button Grid.Row="7" Name="tenzerMB"   Content="Основные элементы" Click="TenzerMB_Click" />
+        <Button Grid.Row="8" VerticalAlignment="Bottom" Height="40"  Name="del1" Margin="25"  Content="Отчистить" Click="Del1_Click"/>
+
+        <Grid Grid.Row="0" Grid.ColumnSpan="3" Background="Gray">
+            <Grid.Effect><DropShadowEffect Color="#FFF3EFEF" BlurRadius="5" Direction="300"></DropShadowEffect></Grid.Effect>
+            
+        </Grid>
 
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="2" Grid.RowSpan="8" >
-            <Grid> 
-                <Grid Name="lol2" Grid.Column="1" Grid.Row="4" Grid.RowSpan="8" /> 
-                <Grid Name="lol1" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" />
+            <Grid>
+                <Grid Name="lol2" Grid.Column="1" Grid.Row="5" Grid.RowSpan="8" />
+                <Grid Name="lol1" Grid.Column="1" Grid.Row="3" Grid.RowSpan="2" />
             </Grid>
-            
+
         </ScrollViewer>
-      
+
         <Grid Name="lol3" Grid.Column="2" Grid.Row="2" Grid.RowSpan="7" />
-        
+
     </Grid>
 </Window>

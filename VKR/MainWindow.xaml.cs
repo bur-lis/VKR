@@ -82,21 +82,18 @@ namespace VKR
             Label l = new Label();
             lol1.Children.Add(l);
             lol1.Children.Add(t);
-            Grid.SetColumn(l, 1);
-            Grid.SetColumn(t, 1);
-
-            
+             
             l.Width = 200;
             l.Height = 30;
             l.HorizontalAlignment = HorizontalAlignment.Left;
             l.VerticalAlignment = VerticalAlignment.Top;
             l.Margin = new Thickness(10, 5, 0, 15);
             l.Content = "Введите размер матрицы:";
-
             t.Margin = new Thickness(210, 10, 0, 15);
+
             t.TextChanged += textBox_TextChanged;
             t.TextInput += textBox_TextChanged;
-        }
+        } // отрисовка
         public SparseMatrix GetMatrix()
         {
             SparseMatrix m1 = new SparseMatrix(Convert.ToInt32(t.Text), Convert.ToInt32(t.Text));
@@ -128,6 +125,7 @@ namespace VKR
             if (m == "") mm = 0; else mm = Convert.ToInt32(m);
             return new double[] { cc, mm };
         }
+
         private void textBox_TextChanged(object sender, EventArgs e)
         {
             lol2.Children.Clear();
@@ -144,10 +142,9 @@ namespace VKR
                 lol2.Children.Add(b[i]);
                 if (i % Convert.ToInt32(t.Text) == 0) { l += 25; k = 10; }
                 b[i].Margin = new Thickness(k, l, 10, 15);
-                b[i].FontWeight = FontWeights.Bold;
                 k += 37;
             }
-        }
+        } // отрисовка матрицы
         
         private void patternB_Click(object sender, RoutedEventArgs e)
         {
@@ -169,7 +166,7 @@ namespace VKR
                 l = 90;
             try
             {
-                        m = Convert.ToInt32(t1.Text); n = Convert.ToInt32(t2.Text);
+                m = Convert.ToInt32(t1.Text); n = Convert.ToInt32(t2.Text);
                 cb = new ComboBox[m * n];
                 for (int i = 0; i < m; i++)
                 {
@@ -184,15 +181,11 @@ namespace VKR
                         cb[i * n + j] = new ComboBox();
                         lol2.Children.Add(cb[i * n + j]);
                         cb[i * n + j].Margin = new Thickness(k, l, 10, 15);
-                        cb[i * m + j].PreviewTextInput += lool;
+                        cb[i * n + j].PreviewTextInput += lool;
                         k += 70;
                         
 
                         for (int q = 0; q < znach.Count; q++) cb[i * n + j].Items.Add(znach[q]);
-                        cb[i * n + j].IsTextSearchEnabled = true;
-                        cb[i * n + j].FontWeight = FontWeights.Bold;
-                        cb[i * n + j].FontStyle = FontStyles.Italic;
-                        cb[i * n + j].FontSize = 16;
                         cb[i * n + j].Name = "c"+Convert.ToString(i * n + j);
                         for (int q=0;q<m;q++)
                         {
@@ -208,14 +201,12 @@ namespace VKR
                     lol2.Children.Add(lb1);
                     l += 65; k = 50;
                 }
-
-            }
+             }
             catch { } 
-        }
+        } // отрисовка схемы
 
         private void lool(object sender, TextCompositionEventArgs e)
         {
-            
             ComboBox c = (ComboBox)sender;
             string s = "[V,W,";
             string st = c.Name.Substring(1,c.Name.Length - 1);
@@ -239,106 +230,68 @@ namespace VKR
             
             lol2.Children.Clear();
             lol1.Children.Clear();
-            lol1.Children.Add(l1);
-            
-            lol1.Children.Add(t1);
-            Grid.SetColumn(l1, 1);
-            Grid.SetColumn(t1, 1);
 
-            l1.Background = Brushes.MintCream;
-            l1.Width = 200;
+            lol1.Children.Add(l1);
+            lol1.Children.Add(l2);
+            lol1.Children.Add(t1);
+            lol1.Children.Add(t2);
+ 
+            l1.Width = 230;
             l1.Height = 30;
-            l1.HorizontalAlignment = HorizontalAlignment.Left;
-            l1.VerticalAlignment = VerticalAlignment.Top;
             l1.Margin = new Thickness(10, 15, 10, 15);
             l1.Content = "Введите количество проводов:";
-            l1.FontWeight = FontWeights.Bold;
-            l1.FontStyle = FontStyles.Italic;
 
             t1.Width = 30;
             t1.Height = 20;
-            t1.HorizontalAlignment = HorizontalAlignment.Left;
-            t1.VerticalAlignment = VerticalAlignment.Top;
-            t1.Margin = new Thickness(210, 20, 10, 15);
-            t1.TextAlignment = TextAlignment.Center;
-            lol1.Children.Add(l2);
-            lol1.Children.Add(t2);
-            Grid.SetColumn(l2, 1);
-            Grid.SetColumn(t2, 1);
-            t1.FontWeight = FontWeights.Bold;
-            t2.FontWeight = FontWeights.Bold;
-
-            l2.Background = Brushes.MintCream;
-            l2.Width = 400;
+            t1.Margin = new Thickness(250, 20, 10, 15);
+            t1.TextChanged += textBox1_TextChanged;
+            
+            l2.Width = 450;
             l2.Height = 30;
-            l2.HorizontalAlignment = HorizontalAlignment.Left;
-            l2.VerticalAlignment = VerticalAlignment.Top;
             l2.Margin = new Thickness(10, 40, 10, 15);
             l2.Content = "Введите максимальное количество элементов на проводе:";
-            l2.FontWeight = FontWeights.Bold;
-            l2.FontStyle = FontStyles.Italic;
 
             t2.Width = 30;
             t2.Height = 20;
-            t2.HorizontalAlignment = HorizontalAlignment.Left;
-            t2.VerticalAlignment = VerticalAlignment.Top;
-            t2.Margin = new Thickness(380, 45, 10, 15);
-            t2.TextAlignment = TextAlignment.Center;
+            t2.Margin = new Thickness(450, 45, 10, 15);
             t2.TextChanged += textBox1_TextChanged;
-            t1.TextChanged += textBox1_TextChanged;
 
             NewMat();
-        }
+        }  // отрисовка
 
         public void NewMat()
         {
+            Button b = new Button();
+            Label l = new Label();
             Label l3 = new Label();
             Label l4 = new Label();
 
+            lol3.Children.Add(b);
+            lol3.Children.Add(l);
             lol3.Children.Add(l3);
             lol3.Children.Add(l4);
-
-            l3.Background = Brushes.MintCream;
+            lol3.Children.Add(tm); 
+             
             l3.Width = 200;
             l3.Height = 30;
-            l3.HorizontalAlignment = HorizontalAlignment.Left;
-            l3.VerticalAlignment = VerticalAlignment.Top;
             l3.Margin = new Thickness(10, 15, 10, 0);
             l3.Content = "Hовый оператор:";
-            l3.FontWeight = FontWeights.Bold;
-            l3.FontStyle = FontStyles.Italic;
 
-            l4.Background = Brushes.MintCream;
             l4.Width = 100;
             l4.Height = 30;
-            l4.HorizontalAlignment = HorizontalAlignment.Left;
-            l4.VerticalAlignment = VerticalAlignment.Top;
             l4.Margin = new Thickness(10, 40, 0, 0);
             l4.Content = "Введите имя:";
-            l4.FontWeight = FontWeights.Bold;
-            l4.FontStyle = FontStyles.Italic;
-            tm.Width = 30;
-            tm.Height = 20;
-            tm.VerticalAlignment = VerticalAlignment.Top;
-            tm.HorizontalAlignment = HorizontalAlignment.Center;
-            tm.Margin = new Thickness(120, 45, 0, 0);
-            tm.TextAlignment = TextAlignment.Center;
-            lol3.Children.Add(tm);
 
-           // tm.PreviewTextInput += lool;
-
-            Label l = new Label();
-            lol3.Children.Add(l);
-            Grid.SetColumn(l, 1);
-            l.Background = Brushes.MintCream;
             l.Width = 170;
             l.Height = 30;
-            l.HorizontalAlignment = HorizontalAlignment.Left;
-            l.VerticalAlignment = VerticalAlignment.Top;
             l.Margin = new Thickness(10, 75, 10, 5);
             l.Content = "Введите матрицу:";
-            l.FontWeight = FontWeights.Bold;
-            l.FontStyle = FontStyles.Italic;
+
+            tm.Width = 30;
+            tm.Height = 20;
+            tm.HorizontalAlignment = HorizontalAlignment.Center;
+            tm.Margin = new Thickness(120, 45, 0, 0);
+ 
             int k = 110, n = 70;
             mat = new TextBox[4];
             for (int i = 0; i < 4; i++)
@@ -354,20 +307,15 @@ namespace VKR
                 n += 35;
                 if (i == 1) { k += 25; n = 70; }
             }
-            Button b = new Button();
-            b.HorizontalAlignment = HorizontalAlignment.Left;
-            b.VerticalAlignment = VerticalAlignment.Top;
+
             b.Height = 30;
             b.Width = 80;
             b.Content = "Добавить";
-            lol3.Children.Add(b);
             b.HorizontalAlignment = HorizontalAlignment.Center;
+            b.VerticalAlignment = VerticalAlignment.Top;
             b.Margin = new Thickness(0, 170, 0, 0);
-            b.Background = Brushes.Beige;
-            b.BorderBrush = Brushes.Gainsboro;
-            b.FontWeight = FontWeights.Medium;
             b.Click += B_Click;
-        }
+        } // отрисовка
 
         private void B_Click(object sender, RoutedEventArgs e)
         {
@@ -415,50 +363,33 @@ namespace VKR
         public void Etset()
         {
             Label l = new Label();
-            lol1.Children.Add(l);
-            lol1.Children.Add(t3);
-
             Label l1 = new Label();
+
+            lol1.Children.Add(l);
             lol2.Children.Add(l1);
+            lol1.Children.Add(t3);
             lol2.Children.Add(t4);
 
-            l.Background = Brushes.MintCream;
             l.Width = 300;
             l.Height = 30;
-            l.HorizontalAlignment = HorizontalAlignment.Left;
-            l.VerticalAlignment = VerticalAlignment.Top;
             l.Margin = new Thickness(10, 5, 0, 15);
             l.Content = "Введите внешнее произведениие:";
-            l.FontWeight = FontWeights.Bold;
-            l.FontStyle = FontStyles.Italic;
+
+            l1.Width = 300;
+            l1.Height = 30;
+            l1.Margin = new Thickness(10, 155, 10, 15);
+            l1.Content = "Введите тензерное произведениие:";
 
             t3.FontWeight = FontWeights.Bold;
             t3.Width = 630;
             t3.Height = 30;
-            t3.HorizontalAlignment = HorizontalAlignment.Left;
-            t3.VerticalAlignment = VerticalAlignment.Top;
             t3.Margin = new Thickness(10, 40, 0, 15);
-            t3.TextAlignment = TextAlignment.Center;
 
-            l1.Background = Brushes.MintCream;
-            l1.Width = 300;
-            l1.Height = 30;
-            l1.HorizontalAlignment = HorizontalAlignment.Left;
-            l1.VerticalAlignment = VerticalAlignment.Top;
-            l1.Margin = new Thickness(10, 155, 10, 15);
-            l1.Content = "Введите тензерное произведениие:";
-            l1.FontWeight = FontWeights.Bold;
-            l1.FontStyle = FontStyles.Italic;
-
-            t4.FontWeight = FontWeights.Bold;
             t4.Width = 630;
             t4.Height = 30;
-            t4.HorizontalAlignment = HorizontalAlignment.Left;
-            t4.VerticalAlignment = VerticalAlignment.Top;
             t4.Margin = new Thickness(10, 190, 0, 15);
-            t4.TextAlignment = TextAlignment.Center;
+        } // отрисовка
 
-        }
         private void Del1_Click(object sender, RoutedEventArgs e)
         {
             del();
