@@ -74,23 +74,6 @@ namespace VKR
             return m1;
         }
 
-        public string MatinVn(SparseMatrix m1)
-        {
-            int      len = m1.ColumnCount;
-            string   rez = "";
-            string[] mas = new string[len];
 
-            for (int i = 0; i< len; i++)
-             mas[i] = Convert.ToString(i, 2).PadLeft((int)Math.Log(len,2), '0');
-            
-            
-            for (int i = 0;i < len; i++)
-            {
-                for (int j = 0; j < len; j++)
-                if (m1[i, j] != 0) rez += m1[i, j].ToString() + "|" + mas[i] + "><" + mas[j] + "|" + " + ";
-            }
-            if (rez == "") return "";
-            return rez.Substring(0, rez.Length - 2); ;
-        }
     }
 }

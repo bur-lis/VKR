@@ -34,17 +34,8 @@ namespace VKR
             TextBox[] b = new TextBox[0];
             TextBox[] mat = new TextBox[4];
             ComboBox[] cb = new ComboBox[0];
-        List<string> znach = new List<string> {" X"," Y"," Z"," H"," T"};
-        Dictionary<string, SparseMatrix> mar = new Dictionary<string, SparseMatrix>()
-        { {" I", SparseMatrix.OfArray(new Complex[,] { { 1, 0 }, { 0, 1 } }) },
-          {" X", SparseMatrix.OfArray(new Complex[,] { { 0, 1 }, { 1, 0 } }) },
-          {" Y",SparseMatrix.OfArray(new Complex[,] { { 0, new Complex(0, -1) },{ new Complex(0, 1), 0 } }) } ,
-          {" Z",SparseMatrix.OfArray(new Complex[,] { { 1, 0 }, {0, -1 } }) },
-          {" H",SparseMatrix.OfArray(new Complex[,] { { 1 / Math.Sqrt(2), 1 / Math.Sqrt(2) }, {1 / Math.Sqrt(2), -1 / Math.Sqrt(2) } }) },
-          {" T",SparseMatrix.OfArray(new Complex[,] { { 1, 0 },{ 0, Math.Exp((new Complex(0, 1)).Imaginary * (Math.PI / 8)) } })} };
-
+      
         Vnesh VN = new Vnesh();
-        MatrixC Matrix = new MatrixC(); 
         private void matrixB_Click(object sender, RoutedEventArgs e)
         {
             
@@ -63,7 +54,6 @@ namespace VKR
 
         public void ShowMat(SparseMatrix m1)
         {
-            Console.WriteLine(m1);
              t.Text = m1.ColumnCount.ToString();
             for (int i = 0; i<m1.ColumnCount; i++)
             {
@@ -94,38 +84,7 @@ namespace VKR
             t.TextChanged += textBox_TextChanged;
             t.TextInput += textBox_TextChanged;
         } // отрисовка
-        public SparseMatrix GetMatrix()
-        {
-            SparseMatrix m1 = new SparseMatrix(Convert.ToInt32(t.Text), Convert.ToInt32(t.Text));
-            for (int i = 0; i < Convert.ToInt32(t.Text); i++)
-            {
-                for (int j = 0; j < Convert.ToInt32(t.Text); j++)
-                {
-                    m1[i, j] = new Complex(MtoStr(b[i * Convert.ToInt32(t.Text)].Text)[0], 
-                                           MtoStr(b[i * Convert.ToInt32(t.Text)].Text)[1]);
-                }
-            }
-            return m1;
-        }
-
-        public double[] MtoStr (string s)
-        {
-            string c = ""; string m = ""; int k = 0,cc,mm;
-            foreach (char l in s)
-            {
-                if (l != '(' && l != ')')
-                    if (l == ',') k++;
-                    else
-                    {
-                        if (k == 0) c += l;
-                        else m += l;
-                    }
-            }
-            if(c == "") cc = 0; else cc = Convert.ToInt32(c);
-            if (m == "") mm = 0; else mm = Convert.ToInt32(m);
-            return new double[] { cc, mm };
-        }
-
+        
         private void textBox_TextChanged(object sender, EventArgs e)
         {
             lol2.Children.Clear();
@@ -185,7 +144,7 @@ namespace VKR
                         k += 70;
                         
 
-                        for (int q = 0; q < znach.Count; q++) cb[i * n + j].Items.Add(znach[q]);
+                        for (int q = 0; q < MatrixC.znach.Count; q++) cb[i * n + j].Items.Add(MatrixC.znach[q]);
                         cb[i * n + j].Name = "c"+Convert.ToString(i * n + j);
                         for (int q=0;q<m;q++)
                         {
@@ -218,7 +177,7 @@ namespace VKR
                     if (q != Convert.ToInt32(st)) s += Convert.ToString(m - q - 1) + ","; ;
                 }
             }
-            for (int i = 0; i < znach.Count; i++) s += znach[i] + ",";
+            for (int i = 0; i < MatrixC.znach.Count; i++) s += MatrixC.znach[i] + ",";
             Regex reg = new Regex(s.Substring(0,s.Length-1)+"]");
             e.Handled = !reg.IsMatch(e.Text.ToUpper());
         }
@@ -327,12 +286,12 @@ namespace VKR
                     for (int j = 0; j < 2; j++)
                     {
                         string h = mat[i * 2 + j].Text;
-                        double s = MtoStr(mat[i * 2 + j].Text)[0];
-                        m1[i, j] = new Complex(MtoStr(mat[i * 2 + j].Text)[0], MtoStr(mat[i * 2 + j].Text)[1]);
+                        double s = MatrixC.MtoStr(mat[i * 2 + j].Text)[0];
+                        m1[i, j] = new Complex(MatrixC.MtoStr(mat[i * 2 + j].Text)[0], MatrixC.MtoStr(mat[i * 2 + j].Text)[1]);
                     }
                 }
-                mar.Add(" "+tm.Text.ToUpper(), m1);
-                znach.Add(" "+tm.Text.ToUpper());
+                MatrixC.mar.Add(" "+tm.Text.ToUpper(), m1);
+                MatrixC.znach.Add(" "+tm.Text.ToUpper());
             }
             catch { }
             tm.Text = "";
@@ -345,7 +304,7 @@ namespace VKR
         
         private void vneshMB_Click(object sender, RoutedEventArgs e)
         {
-                if (b.Length != 0) t3.Text = VN.MatinVn(GetMatrix());
+                if (b.Length != 0) t3.Text = MatrixC.MatinVn(MatrixC.GetMatrix(b,Convert.ToInt32(t.Text)));
             try { if (cb.Length != 0 && t1.Text != "" && t2.Text != "") t4.Text = PtoTen(); }
             catch { }
                 t.Text = "";
@@ -406,7 +365,7 @@ namespace VKR
         {
             del();
             int k = 0, n = 60;
-            for (int i = 0; i< znach.Count; i++)
+            for (int i = 0; i< MatrixC.znach.Count; i++)
             {
                 Label l = new Label();
                 Label l0 = new Label();
@@ -422,14 +381,14 @@ namespace VKR
                 lol2.Children.Add(l3);
                 lol2.Children.Add(l4);
 
-                l.Content = znach[i];
+                l.Content = MatrixC.znach[i];
                 l0.Content = "=";
-                SparseMatrix m1 = mar[znach[i]];
-                l1.Content = mar[znach[i]][0,0];
-                l2.Content = mar[znach[i]][0,1];
+                SparseMatrix m1 = MatrixC.mar[MatrixC.znach[i]];
+                l1.Content = MatrixC.mar[MatrixC.znach[i]][0,0];
+                l2.Content = MatrixC.mar[MatrixC.znach[i]][0,1];
                 
-                l3.Content = mar[znach[i]][1, 0];
-                l4.Content = mar[znach[i]][1, 1];
+                l3.Content = MatrixC.mar[MatrixC.znach[i]][1, 0];
+                l4.Content = MatrixC.mar[MatrixC.znach[i]][1, 1];
 
                 l.Margin  = new Thickness(k, n, 0, 0);
                 l0.Margin = new Thickness(k + 35, n + 10, 0, 0);
@@ -451,31 +410,12 @@ namespace VKR
                 l4.Height = 35;
                 l4.Width = 60;
 
-                l.VerticalAlignment = VerticalAlignment.Top;
-                l.HorizontalAlignment = HorizontalAlignment.Left;
-                l0.VerticalAlignment = VerticalAlignment.Top;
-                l0.HorizontalAlignment = HorizontalAlignment.Left;
-                l1.VerticalAlignment = VerticalAlignment.Top;
-                l1.HorizontalAlignment = HorizontalAlignment.Left;
-                l2.VerticalAlignment = VerticalAlignment.Top;
-                l2.HorizontalAlignment = HorizontalAlignment.Left;
-                l3.VerticalAlignment = VerticalAlignment.Top;
-                l3.HorizontalAlignment = HorizontalAlignment.Left;
-                l4.VerticalAlignment = VerticalAlignment.Top;
-                l4.HorizontalAlignment = HorizontalAlignment.Left;
-
                 l.FontSize = 35;
-                l.FontWeight = FontWeights.Bold;
                 l0.FontSize = 20;
-                l0.FontWeight = FontWeights.Bold;
                 l1.FontSize = 18;
-                l1.FontWeight = FontWeights.Bold;
                 l2.FontSize = 18;
-                l2.FontWeight = FontWeights.Bold;
                 l3.FontSize = 18;
-                l3.FontWeight = FontWeights.Bold;
                 l4.FontSize = 18;
-                l4.FontWeight = FontWeights.Bold;
 
                 k += 200;
                 if ((i + 1) % 3 == 0) { n += 100; k = 0; }
@@ -521,7 +461,7 @@ namespace VKR
                     int l = 0;
                     for (int j = 0; l<yp.Count ;j++)
                         {
-                          if (!mar.ContainsKey("U" + j.ToString()))
+                          if (!MatrixC.mar.ContainsKey("U" + j.ToString()))
                         {
                             s1 = s1.Substring(0, s1.Length - 1) + "*"+ "U" + j.ToString() + "*";
                             List<List<int>> yp1 = new List<List<int>>();
@@ -530,7 +470,7 @@ namespace VKR
                              
                             }
                             // добавление матрицы в список
-                            mar.Add("U" + j.ToString(), NewU(Convert.ToInt32(t1.Text),yp1));
+                            MatrixC.mar.Add("U" + j.ToString(), NewU(Convert.ToInt32(t1.Text),yp1));
                         }
                         }
                     colon[i] = s1;
