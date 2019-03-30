@@ -74,7 +74,7 @@
     </Window.Resources>
 
 
-    <Grid Name="lol" Background="MintCream">
+    <Grid Background="MintCream">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition  Width="1.2*"></ColumnDefinition>
@@ -97,26 +97,27 @@
         <Label Content="Ввести: /" Grid.Row="1"  FontSize="15"/>
         <Label Content="Перевести в:"  Grid.Row="2" Margin="30 0 " FontSize="15"/>
 
-        <Button Grid.Row="3" Name="matrixB"  Content="Матрицy"   Click="matrixB_Click"/>
-        <Button Grid.Row="4" Name="patternB"  Content="Схемy"  Click="patternB_Click"/>
-        <Button Grid.Row="5" Name="vneshMB"  Content="Произведения" Click="vneshMB_Click" />
-        <Button Grid.Row="7" Name="tenzerMB"   Content="Основные элементы" Click="TenzerMB_Click" />
-        <Button Grid.Row="8" VerticalAlignment="Bottom" Height="40"  Name="del1" Margin="25"  Content="Отчистить" Click="Del1_Click"/>
+        <Button Grid.Row="3" Name="MatrixButton"  Content="Матрицy"   Click="MatrixButton_Click"/>
+        <Button Grid.Row="4" Name="SchemaButton"  Content="Схемy"  Click="SchemaButton_Click"/>
+        <Button Grid.Row="5" Name="ProductsButton"  Content="Произведения" Click="ProductsButton_Click" />
+        <Button Grid.Row="7" Name="BasicElements"   Content="Основные элементы" Click="BasicElements_Click" />
+        <Button Grid.Row="8" VerticalAlignment="Bottom" Height="40"  Name="del1" Margin="25"  Content="Отчистить" Click="DeleteAll_Clic"/>
 
         <Grid Grid.Row="0" Grid.ColumnSpan="3" Background="Gray">
             <Grid.Effect><DropShadowEffect Color="#FFF3EFEF" BlurRadius="5" Direction="300"></DropShadowEffect></Grid.Effect>
             
         </Grid>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="2" Grid.RowSpan="8" >
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="3" Grid.RowSpan="8" >
             <Grid>
-                <Grid Name="lol2" Grid.Column="1" Grid.Row="5" Grid.RowSpan="8" />
-                <Grid Name="lol1" Grid.Column="1" Grid.Row="3" Grid.RowSpan="2" />
+                
+                <Grid Name="grid1" Grid.Column="1" Grid.Row="3" Grid.RowSpan="2" />
+                <Grid Name="grid2" Grid.Column="1" Grid.Row="5" Grid.RowSpan="8" />
             </Grid>
 
         </ScrollViewer>
 
-        <Grid Name="lol3" Grid.Column="2" Grid.Row="2" Grid.RowSpan="7" />
+        <Grid Name="grid3" Grid.Column="2" Grid.Row="3" Grid.RowSpan="8" />
 
     </Grid>
 </Window>

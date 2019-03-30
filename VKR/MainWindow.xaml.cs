@@ -24,348 +24,358 @@ namespace VKR
         { 
             InitializeComponent();
         }
-            TextBox t = new TextBox();
-            TextBox t1 = new TextBox();
-            TextBox t2 = new TextBox();
-            TextBox t3 = new TextBox();
-            TextBox t4 = new TextBox();
-            TextBox t5 = new TextBox();
-            TextBox tm = new TextBox();
-            TextBox[] b = new TextBox[0];
-            TextBox[] mat = new TextBox[4];
-            ComboBox[] cb = new ComboBox[0];
+
+            TextBox sizeMatrixTb = new TextBox();
+            TextBox numberWiresTb = new TextBox();
+            TextBox numberColumnsTb = new TextBox();
+            TextBox tensorProductTb = new TextBox();
+            TextBox vneshProductTb = new TextBox();
+            TextBox nameNewMatrixTb = new TextBox();
+            TextBox[] matrixTb = new TextBox[0];
+            TextBox[] newMatrixTb = new TextBox[4];
+            ComboBox[] schemaCb = new ComboBox[0];
       
-        Vnesh VN = new Vnesh();
-        private void matrixB_Click(object sender, RoutedEventArgs e)
+        
+        private void MatrixButton_Click(object sender, RoutedEventArgs e)
         {
             
-            del();
-            M1();
-            if (t3.Text != "") ShowMat(VN.VNinMat(t3.Text));
-            t1.Text = "";
-            t2.Text = "";
-            tm.Text = "";
-            t3.Text = "";
-            t4.Text = "";
-            t5.Text = "";
-            cb = new ComboBox[0];
-            mat = new TextBox[0];
+            try
+            {
+                if (tensorProductTb.Text != "") ShowMatrix(Products.VNinMat(tensorProductTb.Text));
+
+                DeleteAll();
+                Page_Matrix_Drawing();
+
+               numberWiresTb.Text = "";
+                numberColumnsTb.Text = "";
+                nameNewMatrixTb.Text = "";
+                tensorProductTb.Text = "";
+                vneshProductTb.Text = "";
+                schemaCb = new ComboBox[0];
+                newMatrixTb = new TextBox[0];
+            }
+            catch { }
         }
 
-        public void ShowMat(SparseMatrix m1)
+        public void ShowMatrix(SparseMatrix matrix)
         {
-             t.Text = m1.ColumnCount.ToString();
-            for (int i = 0; i<m1.ColumnCount; i++)
+             sizeMatrixTb.Text = matrix.ColumnCount.ToString();
+            for (int i = 0; i < matrix.ColumnCount; i++)
             {
-                for (int j = 0; j < m1.ColumnCount; j++)
+                for (int j = 0; j < matrix.ColumnCount; j++)
                 {
-                    string h = m1[i, j].ToString();
-                    b[i * m1.ColumnCount  + j].Text = h;
+                    string h = matrix[i, j].ToString();
+                    matrixTb[i * matrix.ColumnCount  + j].Text = h;
                 }
             }
         }
-        
-        private void M1()
+
+        private void Page_Matrix_Drawing()
         {
-            lol2.Children.Clear();
-            lol1.Children.Clear();
-            Label l = new Label();
-            lol1.Children.Add(l);
-            lol1.Children.Add(t);
+            DeleteAll();
+
+            Label sizeMatrixLb = new Label();
+            grid1.Children.Add(sizeMatrixLb);
+            grid1.Children.Add(sizeMatrixTb);
              
-            l.Width = 200;
-            l.Height = 30;
-            l.HorizontalAlignment = HorizontalAlignment.Left;
-            l.VerticalAlignment = VerticalAlignment.Top;
-            l.Margin = new Thickness(10, 5, 0, 15);
-            l.Content = "Введите размер матрицы:";
-            t.Margin = new Thickness(210, 10, 0, 15);
+            sizeMatrixLb.Width = 200;
+            sizeMatrixLb.Height = 30;
+            sizeMatrixLb.HorizontalAlignment = HorizontalAlignment.Left;
+            sizeMatrixLb.VerticalAlignment = VerticalAlignment.Top;
+            sizeMatrixLb.Margin = new Thickness(10, 5, 0, 15);
+            sizeMatrixLb.Content = "Введите размер матрицы:";
+            sizeMatrixTb.Margin = new Thickness(210, 10, 0, 15);
 
-            t.TextChanged += textBox_TextChanged;
-            t.TextInput += textBox_TextChanged;
-        } // отрисовка
-        
-        private void textBox_TextChanged(object sender, EventArgs e)
-        {
-            lol2.Children.Clear();
-            int m = 0,
-                k = 190,
-                l= 15;
-            try {  m = Convert.ToInt32(t.Text) * Convert.ToInt32(t.Text); }
-            catch { }
-
-            b = new TextBox[m];
-            for (int i = 0; i< m; i++)
-            {
-                b[i] = new TextBox();
-                lol2.Children.Add(b[i]);
-                if (i % Convert.ToInt32(t.Text) == 0) { l += 25; k = 10; }
-                b[i].Margin = new Thickness(k, l, 10, 15);
-                k += 37;
-            }
-        } // отрисовка матрицы
-        
-        private void patternB_Click(object sender, RoutedEventArgs e)
-        {
-            del();
-            P();
-            t3.Text = "";
-            t4.Text = "";
-            t5.Text = "";
-            b = new TextBox[0];
-            t.Text = "";
+            sizeMatrixTb.TextChanged += MatrixDrawing;
+            sizeMatrixTb.TextInput += MatrixDrawing;
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void MatrixDrawing(object sender, EventArgs e)
         {
-            lol2.Children.Clear();
-            int m = 0,
-                n = 0,
-                k = 50,
-                l = 90;
+            grid2.Children.Clear();
             try
             {
-                m = Convert.ToInt32(t1.Text); n = Convert.ToInt32(t2.Text);
-                cb = new ComboBox[m * n];
-                for (int i = 0; i < m; i++)
-                {
-                    for (int j = 0; j < n; j++)
-                    {
-                        Label lb = new Label();
-                        lb.Content = "_____________";
-                        lb.FontWeight = FontWeights.ExtraBold;
-                        lb.Margin = new Thickness(k - 40, l - 5, 10, 15);
-                        lol2.Children.Add(lb);
+                int sizeMatrix,
+                    rightIndent = 190,
+                    topIndent = 15,
+                    tbTextInt = Convert.ToInt32(sizeMatrixTb.Text);
 
-                        cb[i * n + j] = new ComboBox();
-                        lol2.Children.Add(cb[i * n + j]);
-                        cb[i * n + j].Margin = new Thickness(k, l, 10, 15);
-                        cb[i * n + j].PreviewTextInput += lool;
-                        k += 70;
+                sizeMatrix = tbTextInt * tbTextInt;
+                if (tbTextInt < 33 && tbTextInt % 2 == 0)
+                {
+                    matrixTb = new TextBox[sizeMatrix];
+                    for (int i = 0; i < sizeMatrix; i++)
+                    {
+                        matrixTb[i] = new TextBox();
+                        grid2.Children.Add(matrixTb[i]);
+                        if (i % Convert.ToInt32(sizeMatrixTb.Text) == 0) { topIndent  += 25; rightIndent = 10; }
+                        matrixTb[i].Margin = new Thickness(rightIndent, topIndent , 10, 15);
+                        rightIndent += 37;
+                    } 
+                }
+            }
+            catch { }
+        } 
+        
+        private void SchemaButton_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteAll();
+            PageSchemaDrawing();
+            tensorProductTb.Text = "";
+            vneshProductTb.Text = "";
+            matrixTb = new TextBox[0];
+            sizeMatrixTb.Text = "";
+        }
+
+        private void SchemaDrawing(object sender, EventArgs e)
+        {
+            grid2.Children.Clear();
+            
+            try
+            {
+                int rightIndent = 50,
+                    topIndent = 90,
+                    numberColumns = Convert.ToInt32(numberWiresTb.Text),
+                    numberWires = Convert.ToInt32(numberColumnsTb.Text);
+
+                schemaCb = new ComboBox[numberColumns * numberWires];
+                for (int i = 0; i < numberColumns; i++)
+                {
+                    for (int j = 0; j < numberWires; j++)
+                    {
+                        Label wireLb = new Label();
+                        wireLb.Content = "_____________";
+                        wireLb.FontWeight = FontWeights.ExtraBold;
+                        wireLb.Margin = new Thickness(rightIndent - 40, topIndent - 5, 10, 15);
+                        grid2.Children.Add(wireLb);
+
+                        schemaCb[i * numberWires + j] = new ComboBox();
+                        grid2.Children.Add(schemaCb[i * numberWires + j]);
+                        schemaCb[i * numberWires + j].Margin = new Thickness(rightIndent, topIndent, 10, 15);
+                        schemaCb[i * numberWires + j].PreviewTextInput += InputValidation;
+                        rightIndent += 70;
                         
 
-                        for (int q = 0; q < MatrixC.znach.Count; q++) cb[i * n + j].Items.Add(MatrixC.znach[q]);
-                        cb[i * n + j].Name = "c"+Convert.ToString(i * n + j);
-                        for (int q=0;q<m;q++)
+                        for (int q = 0; q < MatrixC.nameGates.Count; q++)
+                            schemaCb[i * numberWires + j].Items.Add(MatrixC.nameGates[q]);
+                        schemaCb[i * numberWires + j].Name = "c"+ Convert.ToString(i * numberWires + j);
+                        for (int q=0;q<numberColumns;q++)
                         {
-                            if (q != i) cb[i * n + j].Items.Add("W"+ Convert.ToString(m-q-1));
-                            if (q != i) cb[i * n+ j].Items.Add("V" + Convert.ToString(m - q - 1));
+                            if (q != i) schemaCb[i * numberWires + j].Items.Add("W"+ Convert.ToString(numberColumns-q-1));
+                            if (q != i) schemaCb[i * numberWires+ j].Items.Add("V" + Convert.ToString(numberColumns - q - 1));
                         }
                     }
-                    Label lb1 = new Label();
-                    lb1.Content = "_____________";
-                    lb1.FontWeight = FontWeights.ExtraBold;
+                    Label wireEndLb = new Label();
+                    wireEndLb.Content = "_____________";
+                    wireEndLb.FontWeight = FontWeights.ExtraBold;
 
-                    lb1.Margin = new Thickness(k - 40, l - 5, 10, 15);
-                    lol2.Children.Add(lb1);
-                    l += 65; k = 50;
+                    wireEndLb.Margin = new Thickness(rightIndent - 40, topIndent - 5, 10, 15);
+                    grid2.Children.Add(wireEndLb);
+                    topIndent += 65; rightIndent = 50;
                 }
              }
             catch { } 
-        } // отрисовка схемы
+        } 
 
-        private void lool(object sender, TextCompositionEventArgs e)
+        private void InputValidation(object sender, TextCompositionEventArgs e)
         {
-            ComboBox c = (ComboBox)sender;
-            string s = "[V,W,";
-            string st = c.Name.Substring(1,c.Name.Length - 1);
-            if (t1.Text != "")
+            ComboBox cbValidation = (ComboBox)sender;
+            string regexStr = "[V,W,";
+
+            if (numberWiresTb.Text != "")
             {
-                int m = Convert.ToInt32(t1.Text);
+                int m = Convert.ToInt32(numberWiresTb.Text);
                 for (int q = 0; q < m; q++)
                 {
-                    if (q != Convert.ToInt32(st)) s += Convert.ToString(m - q - 1) + ","; ;
+                    if (q != Convert.ToInt32(cbValidation.Name.Substring(1,cbValidation.Name.Length - 1)))
+                    {
+                        regexStr += Convert.ToString(m - q - 1) + ","; 
+                    }
                 }
             }
-            for (int i = 0; i < MatrixC.znach.Count; i++) s += MatrixC.znach[i] + ",";
-            Regex reg = new Regex(s.Substring(0,s.Length-1)+"]");
+            for (int i = 0; i < MatrixC.nameGates.Count; i++) regexStr += MatrixC.nameGates[i] + ",";
+            Regex reg = new Regex(regexStr.Substring(0,regexStr.Length-1)+"]");
             e.Handled = !reg.IsMatch(e.Text.ToUpper());
         }
 
-        public void P()
+        public void PageSchemaDrawing()
         {
-            Label l1 = new Label();
-            Label l2 = new Label();
+            Label numberWiresLb = new Label();
+            Label numberColumnsLb = new Label();
             
-            lol2.Children.Clear();
-            lol1.Children.Clear();
+            grid2.Children.Clear();
+            grid1.Children.Clear();
 
-            lol1.Children.Add(l1);
-            lol1.Children.Add(l2);
-            lol1.Children.Add(t1);
-            lol1.Children.Add(t2);
+            grid1.Children.Add(numberWiresLb);
+            grid1.Children.Add(numberColumnsLb);
+            grid1.Children.Add(numberWiresTb);
+            grid1.Children.Add(numberColumnsTb);
  
-            l1.Width = 230;
-            l1.Height = 30;
-            l1.Margin = new Thickness(10, 15, 10, 15);
-            l1.Content = "Введите количество проводов:";
+            numberWiresLb.Width = 230;
+            numberWiresLb.Height = 30;
+            numberWiresLb.Margin = new Thickness(10, 15, 10, 15);
+            numberWiresLb.Content = "Введите количество проводов:";
 
-            t1.Width = 30;
-            t1.Height = 20;
-            t1.Margin = new Thickness(250, 20, 10, 15);
-            t1.TextChanged += textBox1_TextChanged;
+            numberWiresTb.Width = 30;
+            numberWiresTb.Height = 20;
+            numberWiresTb.Margin = new Thickness(250, 20, 10, 15);
+            numberWiresTb.TextChanged += SchemaDrawing;
             
-            l2.Width = 450;
-            l2.Height = 30;
-            l2.Margin = new Thickness(10, 40, 10, 15);
-            l2.Content = "Введите максимальное количество элементов на проводе:";
+            numberColumnsLb.Width = 450;
+            numberColumnsLb.Height = 30;
+            numberColumnsLb.Margin = new Thickness(10, 40, 10, 15);
+            numberColumnsLb.Content = "Введите максимальное количество элементов на проводе:";
 
-            t2.Width = 30;
-            t2.Height = 20;
-            t2.Margin = new Thickness(450, 45, 10, 15);
-            t2.TextChanged += textBox1_TextChanged;
+            numberColumnsTb.Width = 30;
+            numberColumnsTb.Height = 20;
+            numberColumnsTb.Margin = new Thickness(450, 45, 10, 15);
+            numberColumnsTb.TextChanged += SchemaDrawing;
 
-            NewMat();
-        }  // отрисовка
+            NewMatrixDrawing();
+        }  
 
-        public void NewMat()
+        public void NewMatrixDrawing()
         {
-            Button b = new Button();
-            Label l = new Label();
-            Label l3 = new Label();
-            Label l4 = new Label();
+            Button addNewMatrixBt = new Button();
+            Label newMatrixLb = new Label();
+            Label newGateLb = new Label();
+            Label nameNewGateLb = new Label();
 
-            lol3.Children.Add(b);
-            lol3.Children.Add(l);
-            lol3.Children.Add(l3);
-            lol3.Children.Add(l4);
-            lol3.Children.Add(tm); 
+            grid3.Children.Add(addNewMatrixBt);
+            grid3.Children.Add(newMatrixLb);
+            grid3.Children.Add(newGateLb);
+            grid3.Children.Add(nameNewGateLb);
+            grid3.Children.Add(nameNewMatrixTb); 
              
-            l3.Width = 200;
-            l3.Height = 30;
-            l3.Margin = new Thickness(10, 15, 10, 0);
-            l3.Content = "Hовый оператор:";
+            newGateLb.Width = 200;
+            newGateLb.Height = 30;
+            newGateLb.Margin = new Thickness(10, 15, 10, 0);
+            newGateLb.Content = "Hовый оператор:";
 
-            l4.Width = 100;
-            l4.Height = 30;
-            l4.Margin = new Thickness(10, 40, 0, 0);
-            l4.Content = "Введите имя:";
+            nameNewGateLb.Width = 100;
+            nameNewGateLb.Height = 30;
+            nameNewGateLb.Margin = new Thickness(10, 40, 0, 0);
+            nameNewGateLb.Content = "Введите имя:";
 
-            l.Width = 170;
-            l.Height = 30;
-            l.Margin = new Thickness(10, 75, 10, 5);
-            l.Content = "Введите матрицу:";
+            newMatrixLb.Width = 170;
+            newMatrixLb.Height = 30;
+            newMatrixLb.Margin = new Thickness(10, 75, 10, 5);
+            newMatrixLb.Content = "Введите матрицу:";
 
-            tm.Width = 30;
-            tm.Height = 20;
-            tm.HorizontalAlignment = HorizontalAlignment.Center;
-            tm.Margin = new Thickness(120, 45, 0, 0);
+            nameNewMatrixTb.Width = 30;
+            nameNewMatrixTb.Height = 20;
+            nameNewMatrixTb.HorizontalAlignment = HorizontalAlignment.Center;
+            nameNewMatrixTb.Margin = new Thickness(120, 45, 0, 0);
  
-            int k = 110, n = 70;
-            mat = new TextBox[4];
+            int rightIndent = 110, topIndent = 70;
+            newMatrixTb = new TextBox[4];
             for (int i = 0; i < 4; i++)
             {
-                mat[i] = new TextBox();
-                mat[i].Width = 30;
-                mat[i].Height = 20;
-                mat[i].HorizontalAlignment = HorizontalAlignment.Left;
-                mat[i].VerticalAlignment = VerticalAlignment.Top;
-                mat[i].Margin = new Thickness(n, k, 10, 40);
-                lol3.Children.Add(mat[i]);
-                Grid.SetColumn(mat[i], 1);
-                n += 35;
-                if (i == 1) { k += 25; n = 70; }
+                newMatrixTb[i] = new TextBox();
+                newMatrixTb[i].Width = 30;
+                newMatrixTb[i].Height = 20;
+                newMatrixTb[i].HorizontalAlignment = HorizontalAlignment.Left;
+                newMatrixTb[i].VerticalAlignment = VerticalAlignment.Top;
+                newMatrixTb[i].Margin = new Thickness(topIndent, rightIndent, 10, 40);
+                grid3.Children.Add(newMatrixTb[i]);
+                Grid.SetColumn(newMatrixTb[i], 1);
+                topIndent += 35;
+                if (i == 1) { rightIndent += 25; topIndent = 70; }
             }
 
-            b.Height = 30;
-            b.Width = 80;
-            b.Content = "Добавить";
-            b.HorizontalAlignment = HorizontalAlignment.Center;
-            b.VerticalAlignment = VerticalAlignment.Top;
-            b.Margin = new Thickness(0, 170, 0, 0);
-            b.Click += B_Click;
-        } // отрисовка
+            addNewMatrixBt.Height = 30;
+            addNewMatrixBt.Width = 80;
+            addNewMatrixBt.Content = "Добавить";
+            addNewMatrixBt.HorizontalAlignment = HorizontalAlignment.Center;
+            addNewMatrixBt.VerticalAlignment = VerticalAlignment.Top;
+            addNewMatrixBt.Margin = new Thickness(0, 170, 0, 0);
+            addNewMatrixBt.Click += AddNewMatrix_Click;
+        } 
 
-        private void B_Click(object sender, RoutedEventArgs e)
+        private void AddNewMatrix_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                SparseMatrix m1 = new SparseMatrix(2, 2);
+                SparseMatrix newGateMatrix = new SparseMatrix(2, 2);
                 for (int i = 0; i < 2; i++)
                 {
                     for (int j = 0; j < 2; j++)
                     {
-                        string h = mat[i * 2 + j].Text;
-                        double s = MatrixC.MtoStr(mat[i * 2 + j].Text)[0];
-                        m1[i, j] = new Complex(MatrixC.MtoStr(mat[i * 2 + j].Text)[0], MatrixC.MtoStr(mat[i * 2 + j].Text)[1]);
+                        newGateMatrix[i, j] = MatrixC.StrinComplex(newMatrixTb[i * 2 + j].Text);
                     }
                 }
-                MatrixC.mar.Add(" "+tm.Text.ToUpper(), m1);
-                MatrixC.znach.Add(" "+tm.Text.ToUpper());
+                MatrixC.arrayGates.Add(" " + nameNewMatrixTb.Text.ToUpper(), newGateMatrix);
+                MatrixC.nameGates.Add(" " + nameNewMatrixTb.Text.ToUpper());
+
+                nameNewMatrixTb.Text = "";
+                newMatrixTb[0].Text = "";
+                newMatrixTb[1].Text = "";
+                newMatrixTb[2].Text = "";
+                newMatrixTb[3].Text = "";
             }
             catch { }
-            tm.Text = "";
-            mat[0].Text = "";
-            mat[1].Text = "";
-            mat[2].Text = "";
-            mat[3].Text = "";
+            
         }
 
-        
-        private void vneshMB_Click(object sender, RoutedEventArgs e)
+        private void ProductsButton_Click(object sender, RoutedEventArgs e)
         {
-                if (b.Length != 0) t3.Text = MatrixC.MatinVn(MatrixC.GetMatrix(b,Convert.ToInt32(t.Text)));
-            try { if (cb.Length != 0 && t1.Text != "" && t2.Text != "") t4.Text = PtoTen(); }
-            catch { }
-                t.Text = "";
-                t1.Text = "";
-                t2.Text = "";
-                tm.Text = "";
-                b = new TextBox[0];
-                cb = new ComboBox[0];
-                mat = new TextBox[0];
-            del();
-            Etset();
+            try
+            {
+                if (schemaCb.Length != 0 && numberWiresTb.Text != "" && numberColumnsTb.Text != "")
+                    vneshProductTb.Text = Schema.PtoTen(Convert.ToInt32(numberWiresTb.Text), Convert.ToInt32(numberColumnsTb.Text),schemaCb);
 
+                if (matrixTb.Length != 0)
+                    tensorProductTb.Text = MatrixC.MatinVn(MatrixC.GetMatrix(matrixTb,Convert.ToInt32(sizeMatrixTb.Text)));
+
+                sizeMatrixTb.Text = "";
+                numberColumnsTb.Text = "";
+                numberWiresTb.Text = "";
+                nameNewMatrixTb.Text = "";
+
+                matrixTb = new TextBox[0];
+                schemaCb = new ComboBox[0];
+                newMatrixTb = new TextBox[0];
+            DeleteAll();
+            ProductsDrawing();
+            }
+            catch { MessageBox.Show("Проверьте правельность введенных данных"); }
         }
 
-        public void Etset()
+        public void ProductsDrawing()
         {
-            Label l = new Label();
-            Label l1 = new Label();
+            Label vneshLb = new Label();
+            Label tensorLb = new Label();
 
-            lol1.Children.Add(l);
-            lol2.Children.Add(l1);
-            lol1.Children.Add(t3);
-            lol2.Children.Add(t4);
+            grid1.Children.Add(vneshLb);
+            grid2.Children.Add(tensorLb);
+            grid1.Children.Add(tensorProductTb);
+            grid2.Children.Add(vneshProductTb);
 
-            l.Width = 300;
-            l.Height = 30;
-            l.Margin = new Thickness(10, 5, 0, 15);
-            l.Content = "Введите внешнее произведениие:";
+            vneshLb.Width = 300;
+            vneshLb.Height = 30;
+            vneshLb.Margin = new Thickness(10, 5, 0, 15);
+            vneshLb.Content = "Введите внешнее произведениие:";
 
-            l1.Width = 300;
-            l1.Height = 30;
-            l1.Margin = new Thickness(10, 155, 10, 15);
-            l1.Content = "Введите тензерное произведениие:";
+            tensorLb.Width = 300;
+            tensorLb.Height = 30;
+            tensorLb.Margin = new Thickness(10, 155, 10, 15);
+            tensorLb.Content = "Введите тензерное произведениие:";
 
-            t3.FontWeight = FontWeights.Bold;
-            t3.Width = 630;
-            t3.Height = 30;
-            t3.Margin = new Thickness(10, 40, 0, 15);
+            tensorProductTb.FontWeight = FontWeights.Bold;
+            tensorProductTb.Width = 630;
+            tensorProductTb.Height = 30;
+            tensorProductTb.Margin = new Thickness(10, 40, 0, 15);
 
-            t4.Width = 630;
-            t4.Height = 30;
-            t4.Margin = new Thickness(10, 190, 0, 15);
-        } // отрисовка
+            vneshProductTb.Width = 630;
+            vneshProductTb.Height = 30;
+            vneshProductTb.Margin = new Thickness(10, 190, 0, 15);
+        } 
 
-        private void Del1_Click(object sender, RoutedEventArgs e)
+        private void BasicElements_Click(object sender, RoutedEventArgs e)
         {
-            del();
-        }
-
-        public void del()
-        {
-            lol1.Children.Clear();
-            lol2.Children.Clear();
-            lol3.Children.Clear();
-        }
-
-        private void TenzerMB_Click(object sender, RoutedEventArgs e)
-        {
-            del();
+            DeleteAll();
             int k = 0, n = 60;
-            for (int i = 0; i< MatrixC.znach.Count; i++)
+            for (int i = 0; i< MatrixC.nameGates.Count; i++)
             {
                 Label l = new Label();
                 Label l0 = new Label();
@@ -374,21 +384,21 @@ namespace VKR
                 Label l3 = new Label();
                 Label l4 = new Label();
 
-                lol2.Children.Add(l);
-                lol2.Children.Add(l0);
-                lol2.Children.Add(l1);
-                lol2.Children.Add(l2);
-                lol2.Children.Add(l3);
-                lol2.Children.Add(l4);
+                grid2.Children.Add(l);
+                grid2.Children.Add(l0);
+                grid2.Children.Add(l1);
+                grid2.Children.Add(l2);
+                grid2.Children.Add(l3);
+                grid2.Children.Add(l4);
 
-                l.Content = MatrixC.znach[i];
+                l.Content = MatrixC.nameGates[i];
                 l0.Content = "=";
-                SparseMatrix m1 = MatrixC.mar[MatrixC.znach[i]];
-                l1.Content = MatrixC.mar[MatrixC.znach[i]][0,0];
-                l2.Content = MatrixC.mar[MatrixC.znach[i]][0,1];
+                SparseMatrix m1 = MatrixC.arrayGates[MatrixC.nameGates[i]];
+                l1.Content = MatrixC.arrayGates[MatrixC.nameGates[i]][0,0];
+                l2.Content = MatrixC.arrayGates[MatrixC.nameGates[i]][0,1];
                 
-                l3.Content = MatrixC.mar[MatrixC.znach[i]][1, 0];
-                l4.Content = MatrixC.mar[MatrixC.znach[i]][1, 1];
+                l3.Content = MatrixC.arrayGates[MatrixC.nameGates[i]][1, 0];
+                l4.Content = MatrixC.arrayGates[MatrixC.nameGates[i]][1, 1];
 
                 l.Margin  = new Thickness(k, n, 0, 0);
                 l0.Margin = new Thickness(k + 35, n + 10, 0, 0);
@@ -425,66 +435,17 @@ namespace VKR
             }
         }
 
-        public string PtoTen()
+        private void DeleteAll()
         {
-            string[] colon = new string[Convert.ToInt32(t2.Text)];
-            string[] str = new string[Convert.ToInt32(t1.Text)];
-            List<List<int>> yp = new List<List<int>>();
-            string s1 =""; int m = 0;
+            grid1.Children.Clear();
+            grid2.Children.Clear();
+            grid3.Children.Clear();
 
-            for (int i = 0; i < cb.Length; i++) { int k = i % Convert.ToInt32(t2.Text); colon[k] += cb[i].Text.ToUpper() + Convert.ToChar(8853); }
-            for (int i = 0; i< colon.Length; i++)
-            {
-                if (colon[i].Contains('W') || colon[i].Contains('V'))
-                {
-                    colon[i] = colon[i].Replace(" ", "");
-                    for (int j = 0; j < colon[i].Length; j++)
-                    {
-                        if (colon[i][j] == Convert.ToChar(8853))
-                        {
-                            bool g = str[m].IndexOf('W') != -1|| str[m].IndexOf('V') != -1;
-                            if (g)
-                            {
-                                yp.Add(new List<int> {colon[i].Length - j, Convert.ToInt32(str[m].Substring(1, str[m].Length - 1)), Convert.ToInt32(str[m].Substring(0,1))});
-                                s1 += "I" + Convert.ToChar(8853);
-                                s1 = s1.Remove(Convert.ToInt32(t1.Text) - Convert.ToInt32(str[m].Substring(1, str[m].Length - 1))-1,1);
-                                s1 = s1.Insert(Convert.ToInt32(t1.Text) - Convert.ToInt32(str[m].Substring(1, str[m].Length - 1))-1, "I");
-
-                            }
-                            else s1 += str[m] + Convert.ToChar(8853);
-                          m++;
-                        }
-                        else str[m] += colon[i][j];
-
-                        
-                    }
-                    int l = 0;
-                    for (int j = 0; l<yp.Count ;j++)
-                        {
-                          if (!MatrixC.mar.ContainsKey("U" + j.ToString()))
-                        {
-                            s1 = s1.Substring(0, s1.Length - 1) + "*"+ "U" + j.ToString() + "*";
-                            List<List<int>> yp1 = new List<List<int>>();
-                            for (int q = 0; q < yp.Count; q++)
-                            {
-                             
-                            }
-                            // добавление матрицы в список
-                            MatrixC.mar.Add("U" + j.ToString(), NewU(Convert.ToInt32(t1.Text),yp1));
-                        }
-                        }
-                    colon[i] = s1;
-                }
-                else colon[i] = colon[i].Substring(0, colon[i].Length - 1) + "*";
-            }
-            string s = "";
-            for (int i = 0; i< colon.Length; i++) s += colon[i];
-            return s.Substring(0, s.Length - 1);;
         }
 
-        private SparseMatrix NewU(int v, List<List<int>> yp1)
+        private void DeleteAll_Clic(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            DeleteAll();
         }
     }
 }
