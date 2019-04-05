@@ -24,7 +24,6 @@ namespace VKR
             {
                 if (columns[i].Contains('W') || columns[i].Contains('V'))
                 {
-                    columns[i] = columns[i].Replace(" ", "");
                     foreach (char c in columns[i])
                     {
                         if (c == Convert.ToChar(8853))

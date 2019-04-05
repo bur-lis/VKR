@@ -153,7 +153,7 @@ namespace VKR
                         grid2.Children.Add(schemaCb[i * numberWires + j]);
                         schemaCb[i * numberWires + j].Margin = new Thickness(rightIndent, topIndent, 10, 15);
                         schemaCb[i * numberWires + j].PreviewTextInput += InputValidation;
-                        rightIndent += 70;
+                        rightIndent += 85;
                         
 
                         for (int q = 0; q < MatrixC.nameGates.Count; q++)
@@ -304,8 +304,8 @@ namespace VKR
                         newGateMatrix[i, j] = MatrixC.StrinComplex(newMatrixTb[i * 2 + j].Text);
                     }
                 }
-                MatrixC.arrayGates.Add(" " + nameNewMatrixTb.Text.ToUpper(), newGateMatrix);
-                MatrixC.nameGates.Add(" " + nameNewMatrixTb.Text.ToUpper());
+                MatrixC.arrayGates.Add(nameNewMatrixTb.Text.ToUpper(), newGateMatrix);
+                MatrixC.nameGates.Add(nameNewMatrixTb.Text.ToUpper());
 
                 nameNewMatrixTb.Text = "";
                 newMatrixTb[0].Text = "";
@@ -374,7 +374,7 @@ namespace VKR
         private void BasicElements_Click(object sender, RoutedEventArgs e)
         {
             DeleteAll();
-            int k = 0, n = 60;
+            int k = 0, n = 0;
             for (int i = 0; i< MatrixC.nameGates.Count; i++)
             {
                 Label l = new Label();
@@ -393,47 +393,80 @@ namespace VKR
 
                 l.Content = MatrixC.nameGates[i];
                 l0.Content = "=";
-                SparseMatrix m1 = MatrixC.arrayGates[MatrixC.nameGates[i]];
-                l1.Content = MatrixC.arrayGates[MatrixC.nameGates[i]][0,0];
-                l2.Content = MatrixC.arrayGates[MatrixC.nameGates[i]][0,1];
-                
-                l3.Content = MatrixC.arrayGates[MatrixC.nameGates[i]][1, 0];
-                l4.Content = MatrixC.arrayGates[MatrixC.nameGates[i]][1, 1];
 
                 l.Margin  = new Thickness(k, n, 0, 0);
                 l0.Margin = new Thickness(k + 35, n + 10, 0, 0);
-                l1.Margin = new Thickness(k + 60, n, 0, 0);
-                l2.Margin = new Thickness(k + 115, n, 0, 0);
-                l3.Margin = new Thickness(k + 60, n + 25, 0, 0);
-                l4.Margin = new Thickness(k + 115, n + 25, 0, 0);
-
-                l.Height = 60;
-                l.Width = 50;
-                l1.Height = 35;
-                l1.Width = 60;
-                l2.Height = 35;
-                l2.Width = 60;
-                l3.Height = 35;
-                l3.Width = 60;
-                l0.Height = 30;
-                l0.Width = 60;
-                l4.Height = 35;
-                l4.Width = 60;
-
                 l.FontSize = 35;
                 l0.FontSize = 20;
-                l1.FontSize = 18;
-                l2.FontSize = 18;
-                l3.FontSize = 18;
-                l4.FontSize = 18;
 
-                k += 200;
-                if ((i + 1) % 3 == 0) { n += 100; k = 0; }
+                SparseMatrix m1 = MatrixC.arrayGates[MatrixC.nameGates[i]];
+                int columnCount = m1.ColumnCount;
+                int m = k;
+                for (int j = 0; j< columnCount; j++)
+                {
+                    for (int q = 0; q < columnCount; q++)
+                    {
+                        m += 80;
+                        Label newLb = new Label();
+                        grid2.Children.Add(newLb);
+                        newLb.HorizontalContentAlignment = HorizontalAlignment.Center;
+                        newLb.FontSize = 12;
+                        newLb.Height = 35;
+                        newLb.Width = 80;
+                        newLb.Margin = new Thickness(m, n, 0, 0);
+                        newLb.Content = "(" + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][j, q].Real, 2) + ","
+                                            + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][j, q].Imaginary, 2) + ")";
+                    }
+                    n += 25;
+                    m = k;
+                }
 
-                
-
+                n = n - (int)25 * columnCount;
+                k += 120*columnCount;
+                if (k + 60 + 80* MatrixC.arrayGates[MatrixC.nameGates[i]].ColumnCount> 640) { n += 50*columnCount; k = 0; }
             }
+                
+            //l1.Content = "(" + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][0, 0].Real,2) + ","
+            //                 + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][0, 0].Imaginary, 2) + ")";
+            //l2.Content = "(" + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][0, 1].Real, 2) + ","
+            //                 + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][0, 1].Imaginary, 2) + ")";
+            //l3.Content = "(" + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][1, 0].Real, 2) + ","
+            //                 + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][1, 0].Imaginary, 2) + ")";
+            //l4.Content = "(" + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][1, 1].Real, 2) + ","
+            //                 + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][1, 1].Imaginary, 2) + ")"; ;
+
+
+            //l1.Margin = new Thickness(k + 60, n, 0, 0);
+            //l2.Margin = new Thickness(k + 115, n, 0, 0);
+            //l3.Margin = new Thickness(k + 60, n + 25, 0, 0);
+            //l4.Margin = new Thickness(k + 115, n + 25, 0, 0);
+
+            //l.Height = 60;
+            //l.Width = 50;
+            //l1.Height = 35;
+            //l1.Width = 60;
+            //l2.Height = 35;
+            //l2.Width = 60;
+            //l3.Height = 35;
+            //l3.Width = 60;
+            //l0.Height = 30;
+            //l0.Width = 60;
+            //l4.Height = 35;
+            //l4.Width = 60;
+
+
+            //l1.FontSize = 18;
+            //l2.FontSize = 18;
+            //l3.FontSize = 18;
+            //l4.FontSize = 18;
+
+            //k += 200;
+            //if ((i + 1) % 3 == 0) { n += 100; k = 0; }
+
+
+
         }
+        
 
         private void DeleteAll()
         {

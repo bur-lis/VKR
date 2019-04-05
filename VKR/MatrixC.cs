@@ -12,15 +12,15 @@ namespace VKR
 {
     class MatrixC
     {
-        public static List<string> nameGates = new List<string> { " X", " Y", " Z", " H", " T" };
+        public static List<string> nameGates = new List<string> { "X", "Y", "Z", "H", "T" };
 
         public static Dictionary<string, SparseMatrix> arrayGates = new Dictionary<string, SparseMatrix>()
-        { {" I", SparseMatrix.OfArray(new Complex[,] { { 1, 0 }, { 0, 1 } }) },
-          {" X", SparseMatrix.OfArray(new Complex[,] { { 0, 1 }, { 1, 0 } }) },
-          {" Y",SparseMatrix.OfArray(new Complex[,] { { 0, new Complex(0, -1) },{ new Complex(0, 1), 0 } }) } ,
-          {" Z",SparseMatrix.OfArray(new Complex[,] { { 1, 0 }, {0, -1 } }) },
-          {" H",SparseMatrix.OfArray(new Complex[,] { { 1 / Math.Sqrt(2), 1 / Math.Sqrt(2) }, {1 / Math.Sqrt(2), -1 / Math.Sqrt(2) } }) },
-          {" T",SparseMatrix.OfArray(new Complex[,] { { 1, 0 },{ 0, Math.Exp((new Complex(0, 1)).Imaginary * (Math.PI / 8)) } })} };
+        { {"I", SparseMatrix.OfArray(new Complex[,] { { 1, 0 }, { 0, 1 } }) },
+          {"X", SparseMatrix.OfArray(new Complex[,] { { 0, 1 }, { 1, 0 } }) },
+          {"Y",SparseMatrix.OfArray(new Complex[,] { { 0, new Complex(0, -1) },{ new Complex(0, 1), 0 } }) } ,
+          {"Z",SparseMatrix.OfArray(new Complex[,] { { 1, 0 }, {0, -1 } }) },
+          {"H",SparseMatrix.OfArray(new Complex[,] { { 1 / Math.Sqrt(2), 1 / Math.Sqrt(2) }, {1 / Math.Sqrt(2), -1 / Math.Sqrt(2) } }) },
+          {"T",SparseMatrix.OfArray(new Complex[,] { { 1, 0 },{ 0, Math.Exp((new Complex(0, 1)).Imaginary * (Math.PI / 8)) } })} };
 
         public static SparseMatrix NewU(int v, Dictionary<int, List<string>> yp)
         {
