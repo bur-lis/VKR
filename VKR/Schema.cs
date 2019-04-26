@@ -54,8 +54,9 @@ namespace VKR
                         if (!MatrixC.arrayGates.ContainsKey("U" + j.ToString()))
                         {
                             columnResult = columnResult.Substring(0, columnResult.Length - 1) + "*" + "U" + j.ToString() + "*";
+                            MatrixC.arrayGates.Add("U" + j.ToString(), MatrixC.NewU(wiresCount, controls.ElementAt(l).Key, controls[controls.ElementAt(l).Key]));
+                            SparseMatrix mm = MatrixC.arrayGates["U0"];
                             l++;
-                            MatrixC.arrayGates.Add("U" + j.ToString(), MatrixC.NewU(wiresCount, controls));
                         }
                     }
                     columns[i] = columnResult;

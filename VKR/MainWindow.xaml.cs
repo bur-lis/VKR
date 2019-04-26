@@ -338,7 +338,7 @@ namespace VKR
             DeleteAll();
             ProductsDrawing();
             }
-            catch { MessageBox.Show("Проверьте правельность введенных данных"); }
+            catch(Exception ex) { MessageBox.Show("Проверьте правельность введенных данных"); Console.WriteLine(ex.StackTrace); }
         }
 
         public void ProductsDrawing()
@@ -426,45 +426,6 @@ namespace VKR
                 if (k + 60 + 80* MatrixC.arrayGates[MatrixC.nameGates[i]].ColumnCount> 640) { n += 50*columnCount; k = 0; }
             }
                 
-            //l1.Content = "(" + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][0, 0].Real,2) + ","
-            //                 + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][0, 0].Imaginary, 2) + ")";
-            //l2.Content = "(" + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][0, 1].Real, 2) + ","
-            //                 + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][0, 1].Imaginary, 2) + ")";
-            //l3.Content = "(" + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][1, 0].Real, 2) + ","
-            //                 + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][1, 0].Imaginary, 2) + ")";
-            //l4.Content = "(" + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][1, 1].Real, 2) + ","
-            //                 + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][1, 1].Imaginary, 2) + ")"; ;
-
-
-            //l1.Margin = new Thickness(k + 60, n, 0, 0);
-            //l2.Margin = new Thickness(k + 115, n, 0, 0);
-            //l3.Margin = new Thickness(k + 60, n + 25, 0, 0);
-            //l4.Margin = new Thickness(k + 115, n + 25, 0, 0);
-
-            //l.Height = 60;
-            //l.Width = 50;
-            //l1.Height = 35;
-            //l1.Width = 60;
-            //l2.Height = 35;
-            //l2.Width = 60;
-            //l3.Height = 35;
-            //l3.Width = 60;
-            //l0.Height = 30;
-            //l0.Width = 60;
-            //l4.Height = 35;
-            //l4.Width = 60;
-
-
-            //l1.FontSize = 18;
-            //l2.FontSize = 18;
-            //l3.FontSize = 18;
-            //l4.FontSize = 18;
-
-            //k += 200;
-            //if ((i + 1) % 3 == 0) { n += 100; k = 0; }
-
-
-
         }
         
 
