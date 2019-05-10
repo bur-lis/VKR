@@ -12,18 +12,17 @@
 
         <Style TargetType="Button">
             <Setter Property="FontFamily" Value="Verdana" />
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Foreground" Value="#374137" />
-            <Setter Property="Margin" Value="5" />
+            <Setter Property="Background" Value="MintCream"/>
+            <!--<Setter Property="Foreground" Value="#374137"/>-->
             <Setter Property="BorderBrush" Value="#FFB8B6B6"/>
             <Setter Property="FontStyle" Value="Italic"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="12"/>
-            <!--<Setter Property="Effect">
+            <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect Color="#FFCFC9C9"  Direction="300"/>
+                    <DropShadowEffect Color="#FFCFC9C9" ShadowDepth="2"  BlurRadius="0.1" Direction="280"/>
                 </Setter.Value>
-            </Setter>-->
+            </Setter>
         </Style>
 
         <Style TargetType="Label">
@@ -69,7 +68,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <!--<Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect Color="#FFF7F5F5"   BlurRadius="10" Direction="300"/>
+                    <DropShadowEffect Color="#FFF7F5F5"    BlurRadius="1" Direction="300"/>
                 </Setter.Value>
             </Setter>-->
         </Style >
@@ -80,6 +79,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition  Width="1.2*"></ColumnDefinition>
+            <!--<ColumnDefinition  Width="1"></ColumnDefinition>-->
             <ColumnDefinition Width="4*"></ColumnDefinition>
             <ColumnDefinition  Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -95,17 +95,18 @@
             <RowDefinition Height="1.5*"></RowDefinition>
             <RowDefinition Height="8*"></RowDefinition>
         </Grid.RowDefinitions>
+        <!--<Grid Grid.Column="1" Grid.RowSpan="9" Background="#374137"/>-->
 
         <Label Content="Ввести: /" Grid.Row="1"  FontSize="15"/>
         <Label Content="Перевести в:"  Grid.Row="2" Margin="30 0 " FontSize="15"/>
 
-        <Button Grid.Row="3" Name="MatrixButton"  Content="Матрицy"   Click="MatrixButton_Click"/>
-        <Button Grid.Row="4" Name="SchemaButton"  Content="Схемy"  Click="SchemaButton_Click"/>
-        <Button Grid.Row="5" Name="ProductsButton"  Content="Произведения" Click="ProductsButton_Click" />
-        <Button Grid.Row="7" Name="BasicElements"   Content="Основные элементы" Click="BasicElements_Click" />
-        <Button Grid.Row="8" VerticalAlignment="Bottom" Height="40"  Name="del1" Margin="25"  Content="Отчистить" Click="DeleteAll_Clic"/>
+        <Button BorderBrush="{x:Null}" Grid.Row="3" Name="MatrixButton"  Content="Матрицy"   Click="MatrixButton_Click" />
+        <Button BorderBrush="{x:Null}" Grid.Row="4" Name="SchemaButton"  Content="Схемy"  Click="SchemaButton_Click"/>
+        <Button BorderBrush="{x:Null}" Grid.Row="5" Name="ProductsButton"  Content="Произведения" Click="ProductsButton_Click" />
+        <Button BorderBrush="{x:Null}" Grid.Row="6" Name="BasicElements"   Content="Основные элементы" Click="BasicElements_Click" />
+        <Button Grid.Row="9" VerticalAlignment="Bottom" Height="40"  Name="del1" Margin="25"  Content="Отчистить" Click="DeleteAll_Clic"/>
 
-        <Grid Grid.Row="0" Grid.ColumnSpan="3" Background="Gray">
+        <Grid Grid.Row="0" Grid.ColumnSpan="4" Background="#374137">
             <Grid.Effect><DropShadowEffect Color="#FFF3EFEF" BlurRadius="5" Direction="300"></DropShadowEffect></Grid.Effect>
             
         </Grid>

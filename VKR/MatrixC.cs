@@ -28,16 +28,16 @@ namespace VKR
 
             string[] condition = new string[v - znach.Count + 1],
                      binaryNumbers = MatrixC.ArrayofBinaryNumbers(matrix.ColumnCount);
-            string partCondition = "",s;
+            string partCondition = "", s;
 
 
             for (int i = 0; i < v; i++) partCondition += "*";
             StringBuilder str = new StringBuilder(partCondition);
             for (int i = 1; i < znach.Count; i++)
             {
-              if (znach[i].Substring(0, 1) == "W") s = "1"; else s = "0";
-                
-                str[v - Convert.ToInt32(znach[i].Substring(1, znach[i].Length - 1))-1] = Convert.ToChar(s);
+                if (znach[i].Substring(0, 1) == "W") s = "1"; else s = "0";
+
+                str[v - Convert.ToInt32(znach[i].Substring(1, znach[i].Length - 1)) - 1] = Convert.ToChar(s);
             }
             partCondition = str.ToString();
 
@@ -45,38 +45,30 @@ namespace VKR
 
             List<string> lol1 = fun(lol);
 
-            for (int i = 0; i < binaryNumbers.Length; i++)
+            for (int i = 0; i < matrix.ColumnCount; i++)
             {
-                var rowMatrix1 = new Complex[matrix.ColumnCount];
-                for (int j = 0; j < binaryNumbers[i].Length; j++) rowMatrix1[j] = int.Parse(binaryNumbers[i][j].ToString());
-                if (lol1.Contains(binaryNumbers[i])) // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! + посмотреть какой индекс в матрице отвечает за столбец а какой за строку
+                if (lol1.Contains(binaryNumbers[i]))
                 {
-                    SparseMatrix newColoumn = new SparseMatrix(binaryNumbers[0].Length,1);
-                    SparseMatrix zer = new SparseMatrix(binaryNumbers[0].Length, 1);
-                    zer[binaryNumbers[0].Length - 1, 0] = 1;
-
-                    if (Convert.ToInt32(binaryNumbers[numberYpr]) == 0) newColoumn[binaryNumbers[0].Length - 1, 0] = 1;
-                    else newColoumn[0, 0] = 1;
-                    Console.WriteLine(arrayGates[znach[0]]);
-                    Console.WriteLine(newColoumn);
-                    SparseMatrix rezultColoumn = arrayGates[znach[0]] * newColoumn;
-
-                    Console.WriteLine(rezultColoumn);
-                    if (rezultColoumn == zer) { rowMatrix1[numberYpr] = 0; }
-                    else {
-                        int numberElem = v - numberYpr - 1;
-                        rowMatrix1[numberElem + binaryNumbers[i].Length] = rezultColoumn[1, 0];
-                    };
-
-                for (int j = 0; j < matrix.ColumnCount / 2; j++) if (j != numberYpr + binaryNumbers[i].Length) rowMatrix1[j + matrix.ColumnCount / 2] = int.Parse(binaryNumbers[i][j].ToString());
-
-                
+                    SparseMatrix[] mas = binaryNumbers[i].ToArray().Select(x => charToMat(x)).ToArray();
+                    Console.WriteLine(mas);
+                    mas[ v - numberYpr - 1] = arrayGates[znach[0]] * mas[v - 1 - numberYpr];
+                    var a = mas.Aggregate((x, y) => (SparseMatrix)x.KroneckerProduct(y)).EnumerateColumns().ElementAt(0);
+                    matrix.SetColumn(i, a);
                 }
-                else for (int j = 0; j < matrix.ColumnCount / 2; j++) rowMatrix1[j + matrix.ColumnCount / 2] = int.Parse(binaryNumbers[i][j].ToString());
-                
-                for (int q = 0; q < rowMatrix1.Length; q++) matrix[i, q] = rowMatrix1[q];
+                else
+                {
+                    var a = binaryNumbers[i].ToArray().Select(x => charToMat(x)).Aggregate((x, y) => (SparseMatrix)x.KroneckerProduct(y)).EnumerateColumns().ElementAt(0);
+                    matrix.SetColumn(i, a);
+                }
             }
+            Console.Write(matrix);
             return matrix;
+        }
+
+        private static SparseMatrix charToMat(char x)
+        {
+            if (x == '0') return SparseMatrix.OfArray(new Complex[,] { { 1 }, { 0 } });
+            else return SparseMatrix.OfArray(new Complex[,] { { 0 }, { 1 } });
         }
 
         private static List<string> fun(List<string> lol)
@@ -159,6 +151,58 @@ namespace VKR
             }
             if (result == "") return "";
             return result.Substring(0, result.Length - 2); ;
+        }
+
+        public static List<SparseMatrix> MatrixTwoLevel(SparseMatrix mat)
+        {
+            List<SparseMatrix> resultmatrix = new List<SparseMatrix>();
+            for(int i = 0; i < mat.ColumnCount; i++)
+            {
+                for(int j = i+1; j < mat.ColumnCount; j++)
+                {
+                    SparseMatrix m = SparseMatrix.CreateDiagonal(mat.ColumnCount, mat.ColumnCount, 1);
+                    if (mat[j, i] != 0)
+                    {
+                        if (j == mat.ColumnCount - 1 && i == mat.ColumnCount - 2)
+                        {
+                            m[i, i] = Complex.Conjugate(mat[i, i]);
+                            m[i, j] = Complex.Conjugate(mat[j, i]);
+                            m[j, i] = Complex.Conjugate(mat[i, j]);
+                            m[j, j] = Complex.Conjugate(mat[j, j]);
+                        }
+                        else
+                        {
+                            double n = Math.Sqrt(Math.Pow(Complex.Abs(mat[i, i]), 2) + Math.Pow(Complex.Abs(mat[j, i]), 2));
+                            m[i, i] = Complex.Conjugate(mat[i, i]) / n;
+                            m[i, j] = Complex.Conjugate(mat[j, i]) / n;
+                            m[j, i] = mat[j, i] / n;
+                            m[j, j] = -mat[i, i] / n;
+                        }
+                        
+                    }
+                   
+                    resultmatrix.Add((SparseMatrix)m.ConjugateTranspose());
+
+                    mat = m * mat;
+
+                }
+            }
+            List<SparseMatrix> resultmatrix1 = resultmatrix.Where(x => !x.Equals(SparseMatrix.CreateDiagonal(mat.ColumnCount, mat.ColumnCount, 1))).ToList();
+            foreach (SparseMatrix c  in resultmatrix1)
+            {
+                Console.Write(c);
+                int l = 0;
+                for (int j = 0; l < 1; j++)
+                {
+                    if (!MatrixC.arrayGates.ContainsKey("U" + j.ToString()))
+                    {
+                        MatrixC.arrayGates.Add("U" + j.ToString(), c);
+                        MatrixC.nameGates.Add("U" + j.ToString());
+                        l++;
+                    }
+                }
+            }
+            return resultmatrix1;
         }
     }
 }

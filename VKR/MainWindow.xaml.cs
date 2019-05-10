@@ -42,6 +42,10 @@ namespace VKR
             try
             {
                 if (tensorProductTb.Text != "") ShowMatrix(Products.VNinMat(tensorProductTb.Text));
+                else
+                {
+                  if (vneshProductTb.Text != "") ShowMatrix(Products.TeninMat(vneshProductTb.Text));
+                }
 
                 DeleteAll();
                 Page_Matrix_Drawing();
@@ -60,6 +64,7 @@ namespace VKR
         public void ShowMatrix(SparseMatrix matrix)
         {
              sizeMatrixTb.Text = matrix.ColumnCount.ToString();
+            Console.Write(matrix);
             for (int i = 0; i < matrix.ColumnCount; i++)
             {
                 for (int j = 0; j < matrix.ColumnCount; j++)
@@ -325,7 +330,13 @@ namespace VKR
                     vneshProductTb.Text = Schema.PtoTen(Convert.ToInt32(numberWiresTb.Text), Convert.ToInt32(numberColumnsTb.Text),schemaCb);
 
                 if (matrixTb.Length != 0)
-                    tensorProductTb.Text = MatrixC.MatinVn(MatrixC.GetMatrix(matrixTb,Convert.ToInt32(sizeMatrixTb.Text)));
+                {
+                    tensorProductTb.Text = MatrixC.MatinVn(MatrixC.GetMatrix(matrixTb, Convert.ToInt32(sizeMatrixTb.Text)));
+                    vneshProductTb.Text = Products.twoMatinTen(MatrixC.MatrixTwoLevel(MatrixC.GetMatrix(matrixTb, Convert.ToInt32(sizeMatrixTb.Text))));
+
+
+                }
+
 
                 sizeMatrixTb.Text = "";
                 numberColumnsTb.Text = "";
@@ -359,7 +370,7 @@ namespace VKR
             tensorLb.Width = 300;
             tensorLb.Height = 30;
             tensorLb.Margin = new Thickness(10, 155, 10, 15);
-            tensorLb.Content = "Введите тензерное произведениие:";
+            tensorLb.Content = "Введите операторное представление:";
 
             tensorProductTb.FontWeight = FontWeights.Bold;
             tensorProductTb.Width = 630;
@@ -379,24 +390,16 @@ namespace VKR
             {
                 Label l = new Label();
                 Label l0 = new Label();
-                Label l1 = new Label();
-                Label l2 = new Label();
-                Label l3 = new Label();
-                Label l4 = new Label();
 
                 grid2.Children.Add(l);
                 grid2.Children.Add(l0);
-                grid2.Children.Add(l1);
-                grid2.Children.Add(l2);
-                grid2.Children.Add(l3);
-                grid2.Children.Add(l4);
 
                 l.Content = MatrixC.nameGates[i];
                 l0.Content = "=";
 
-                l.Margin  = new Thickness(k, n, 0, 0);
-                l0.Margin = new Thickness(k + 35, n + 10, 0, 0);
-                l.FontSize = 35;
+                l.Margin  = new Thickness(k, n+ 7, 0, 0);
+                l0.Margin = new Thickness(k + 45, n + 10, 0, 0);
+                l.FontSize = 25;
                 l0.FontSize = 20;
 
                 SparseMatrix m1 = MatrixC.arrayGates[MatrixC.nameGates[i]];
