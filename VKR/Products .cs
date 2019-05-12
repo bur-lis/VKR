@@ -91,10 +91,10 @@ namespace VKR
                         if (tenproduct.Count == 0)
                         {
                             tenproduct.Add(s);
-                            tenproduct.RemoveRange(0, tenproduct.Count);
                             s = "";
                         }
-                        product.Add(tenproduct);
+                        //tenproduct.CopyTo()
+                        product.Add(tenproduct.ToList());
                         tenproduct.RemoveRange(0, tenproduct.Count);
                     }
                     else s += ten[i];
@@ -111,13 +111,20 @@ namespace VKR
                 for (int j = 0; j< product[i].Count; j++)
                 {
                     if (j == 0)
+                    {
+                        Console.Write(MatrixC.arrayGates[product[i][j]]);
                         mat.Add(MatrixC.arrayGates[product[i][j]]);
+                    }
+                        
                     else
                         mat[i] = (SparseMatrix)mat[i].KroneckerProduct(MatrixC.arrayGates[product[i][j]]);
                 }
             }
             if (mat.Count > 1) m = mat.Aggregate((x, y) => x * y);
             else m = mat[0];
+            Console.WriteLine(mat[0]);
+            Console.WriteLine(mat[1]);
+            Console.WriteLine(m);
             return m;
         }
     }

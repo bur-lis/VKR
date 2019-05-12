@@ -204,5 +204,20 @@ namespace VKR
             }
             return resultmatrix1;
         }
+
+        public static List<string> Grey(string startStr, string resultStr)
+        {
+            List<string> resultList = new List<string>();
+            
+            for(int i = 0; i< startStr.Length; i++)
+            {
+                if(startStr[i] != resultStr[i])
+                {
+                    startStr = startStr.Remove(i, 1).Insert(i, resultStr[i].ToString());
+                    resultList.Add(startStr);
+                }
+            }
+            return resultList;
+        }
     }
 }

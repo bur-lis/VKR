@@ -6,121 +6,88 @@
         xmlns:local="clr-namespace:VKR"
         mc:Ignorable="d"
         Icon="C:\Users\byrak\source\repos\VKR\VKR\мм.jpg"
-        Title="Eeee" Height="550" Width="1010"   Background="#FFBFBEBE"  ><!--WindowStyle="None" ResizeMode="NoResize"-->
-
-    <Window.Resources>
-
-        <Style TargetType="Button">
-            <Setter Property="FontFamily" Value="Verdana" />
-            <Setter Property="Background" Value="MintCream"/>
-            <!--<Setter Property="Foreground" Value="#374137"/>-->
-            <Setter Property="BorderBrush" Value="#FFB8B6B6"/>
-            <Setter Property="FontStyle" Value="Italic"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect Color="#FFCFC9C9" ShadowDepth="2"  BlurRadius="0.1" Direction="280"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="Label">
-            <Setter Property="FontFamily" Value="Verdana" />
-            <Setter Property="Foreground" Value="#374137" />
-            <Setter Property="Margin" Value="50 0" />
-            <Setter Property="FontStyle" Value="Italic"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <!--<Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect Color="#FFF7F5F5" ShadowDepth="6" BlurRadius="8" Direction="1000"/>
-                </Setter.Value>
-            </Setter>-->
-        </Style>
-
-        <Style TargetType="TextBox">
-            <!--<Setter Property="FontWeight" Value="DemiBold"/>-->
-            <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Width" Value="32"/>
-            <Setter Property="Height" Value="20"/>
-            <!--<Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect Color="#FFF3EFEF" BlurRadius="10" Direction="300"/>
-                </Setter.Value>
-            </Setter>-->
-        </Style>
-
-        <Style TargetType="ComboBox">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="IsEditable" Value="True"/>
-            <Setter Property="IsTextSearchEnabled" Value="True"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Width" Value="50"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <!--<Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect Color="#FFF7F5F5"    BlurRadius="1" Direction="300"/>
-                </Setter.Value>
-            </Setter>-->
-        </Style >
-    </Window.Resources>
+        Title="Eeee" Height="550"  Width="1010"  WindowStyle="None"  ResizeMode="NoResize" Background="#FFBFBEBE"  ><!--WindowStyle="None" ResizeMode="NoResize"-->
 
 
-    <Grid Background="MintCream">
+    <Window.Resources/>
+
+
+    <Grid  Background="#f3f3f3">
+        
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition  Width="1.2*"></ColumnDefinition>
-            <!--<ColumnDefinition  Width="1"></ColumnDefinition>-->
             <ColumnDefinition Width="4*"></ColumnDefinition>
             <ColumnDefinition  Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="1"></RowDefinition>
-            <RowDefinition ></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition Height="1.5*"></RowDefinition>
-            <RowDefinition Height="1.5*"></RowDefinition>
-            <RowDefinition Height="1.5*"></RowDefinition>
-            <RowDefinition Height="1.5*"></RowDefinition>
-            <RowDefinition Height="1.5*"></RowDefinition>
-            <RowDefinition Height="8*"></RowDefinition>
+
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <!--<Grid Grid.Column="1" Grid.RowSpan="9" Background="#374137"/>-->
 
-        <Label Content="Ввести: /" Grid.Row="1"  FontSize="15"/>
-        <Label Content="Перевести в:"  Grid.Row="2" Margin="30 0 " FontSize="15"/>
 
-        <Button BorderBrush="{x:Null}" Grid.Row="3" Name="MatrixButton"  Content="Матрицy"   Click="MatrixButton_Click" />
-        <Button BorderBrush="{x:Null}" Grid.Row="4" Name="SchemaButton"  Content="Схемy"  Click="SchemaButton_Click"/>
-        <Button BorderBrush="{x:Null}" Grid.Row="5" Name="ProductsButton"  Content="Произведения" Click="ProductsButton_Click" />
-        <Button BorderBrush="{x:Null}" Grid.Row="6" Name="BasicElements"   Content="Основные элементы" Click="BasicElements_Click" />
-        <Button Grid.Row="9" VerticalAlignment="Bottom" Height="40"  Name="del1" Margin="25"  Content="Отчистить" Click="DeleteAll_Clic"/>
 
-        <Grid Grid.Row="0" Grid.ColumnSpan="4" Background="#374137">
-            <Grid.Effect><DropShadowEffect Color="#FFF3EFEF" BlurRadius="5" Direction="300"></DropShadowEffect></Grid.Effect>
-            
+        <Grid Grid.Row="0" Grid.ColumnSpan="5" Background="#009687">
+            <Button  x:Name="CloseButton" HorizontalAlignment="Right"
+                    Click="CloseButton_Click" Style="{StaticResource Close}" >
+                <ContentElement>
+                    
+                </ContentElement>
+            </Button>
+            <Button Width="40" x:Name="MaximizeButton" Content="Restore"  HorizontalAlignment="Right" Margin=" 0 0 40 0"
+                    Click="MaximizeButton_Click" Style="{StaticResource Maximize}"
+                    DockPanel.Dock="Right" Foreground="{x:Null}" />
+            <Button Width="40" x:Name="MinButton" Content="Min" HorizontalAlignment="Right" Margin=" 0 0 80 0"
+                    Click="MinimizeButton_Click"
+                    DockPanel.Dock="Right" />
         </Grid>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="3" Grid.RowSpan="8" >
+        <Border   Grid.Row="1" Grid.Column="0" Background="#eeeeee" BorderBrush="#FFB8B6B6" BorderThickness="0 0 1 0"/>
+
+
+        <Grid Background="#eeeeee" Grid.Column="0" Grid.Row="2" >
+
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.5*"></RowDefinition>
+                <RowDefinition Height="1.5*"></RowDefinition>
+                <RowDefinition Height="1.5*"></RowDefinition>
+                <RowDefinition Height="1.5*"></RowDefinition>
+                <RowDefinition Height="12*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Border   Grid.Row="0" BorderBrush="#FFB8B6B6" BorderThickness="0 0 1 1">
+                <Button Name="MatrixButton"  Content="Матрицy"   Click="MatrixButton_Click" />
+            </Border>
+            <Border   Grid.Row="1" BorderBrush="#FFB8B6B6" BorderThickness="0 0 1 1">
+                <Button Name="SchemaButton"  Content="Схемy"  Click="SchemaButton_Click"/>
+            </Border>
+            <Border   Grid.Row="2" BorderBrush="#FFB8B6B6" BorderThickness="0 0 1 1">
+                <Button Name="ProductsButton"  Content="Произведения" Click="ProductsButton_Click" />
+            </Border>
+            <Border   Grid.Row="3" BorderBrush="#FFB8B6B6" BorderThickness="0 0 1 1">
+                <Button Name="BasicElements"   Content="Основные элементы" Click="BasicElements_Click"/>
+            </Border>
+            <Border Grid.Row="4" BorderBrush="#FFB8B6B6" BorderThickness="0 0 1 0">
+                <Grid>
+                    <Button Grid.Row="8" VerticalAlignment="Bottom" Height="40"  Name="del1" Margin="25"  Content="Отчистить" Click="DeleteAll_Clic"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="2" Grid.RowSpan="8" >
             <Grid>
                 
-                <Grid Name="grid1" Grid.Column="1" Grid.Row="3" Grid.RowSpan="2" />
-                <Grid Name="grid2" Grid.Column="1" Grid.Row="5" Grid.RowSpan="8" />
+                <Grid Name="grid1" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" />
+                <Grid Name="grid2" Grid.Column="1" Grid.Row="4" Grid.RowSpan="8" />
             </Grid>
 
         </ScrollViewer>
 
-        <Grid Name="grid3" Grid.Column="2" Grid.Row="3" Grid.RowSpan="8" />
+        <Grid Name="grid3" Grid.Column="2" Grid.Row="2" Grid.RowSpan="8" />
 
     </Grid>
 </Window>
