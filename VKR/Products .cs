@@ -67,45 +67,21 @@ namespace VKR
                     }
 
             }
+            if (resultTen == "" && mat.Count == 1 && mat[0].Equals(SparseMatrix.CreateDiagonal(mat[0].ColumnCount, mat[0].ColumnCount, 1)))
+            {
+                for(int i = 0; i< (int)(Math.Log(mat[0].ColumnCount)/Math.Log(2.0));i++)
+                {
+                    resultTen += "I" + Convert.ToChar(8853);
+                }
+            }
             return resultTen.Substring(0,resultTen.Length -1);
         }
 
         public static SparseMatrix TeninMat(string ten)
         {
-            List<List<string>> product = new List<List<string>>();
-            List<string> tenproduct = new List<string>();
             List<SparseMatrix> mat = new List<SparseMatrix>();
             SparseMatrix m;
-            string s="";
-            for (int i = 0; i< ten.Length; i++)
-            {
-                if (ten[i] == '+' || ten[i] == Convert.ToChar(8853))
-                {
-                    tenproduct.Add(s);
-                    s = "";
-                }
-                else
-                {
-                    if (ten[i] == '*')
-                    {
-                        if (tenproduct.Count == 0)
-                        {
-                            tenproduct.Add(s);
-                            s = "";
-                        }
-                        //tenproduct.CopyTo()
-                        product.Add(tenproduct.ToList());
-                        tenproduct.RemoveRange(0, tenproduct.Count);
-                    }
-                    else s += ten[i];
-
-                    if(i == ten.Length - 1)
-                    {
-                        tenproduct.Add(s);
-                        product.Add(tenproduct);
-                    }
-                }
-            }
+            List<List<string>> product = TeninLst(ten);
             for (int i = 0; i< product.Count; i++)
             {
                 for (int j = 0; j< product[i].Count; j++)
@@ -122,10 +98,97 @@ namespace VKR
             }
             if (mat.Count > 1) m = mat.Aggregate((x, y) => x * y);
             else m = mat[0];
-            Console.WriteLine(mat[0]);
-            Console.WriteLine(mat[1]);
-            Console.WriteLine(m);
             return m;
+        }
+
+        public static List<string> Grey(string startStr, string resultStr)
+        {
+            List<string> resultList = new List<string>();
+            resultList.Add(startStr);
+            for (int i = 0; i < startStr.Length; i++)
+            {
+                if (startStr[i] != resultStr[i])
+                {
+                    startStr = startStr.Remove(i, 1).Insert(i, resultStr[i].ToString());
+                    resultList.Add(startStr);
+                }
+            }
+            resultList.Add(startStr);
+            return resultList;
+        }
+
+        public static List<List<string>> TeninLst (string ten)
+        {
+            List<List<string>> product = new List<List<string>>();
+            List<string> tenproduct = new List<string>();
+            string s = "";
+            for (int i = 0; i < ten.Length; i++)
+            {
+                if (ten[i] == '+' || ten[i] == Convert.ToChar(8853))
+                {
+                    tenproduct.Add(s);
+                    s = "";
+                }
+                else
+                {
+                    if (ten[i] == '*')
+                    {
+                        tenproduct.Add(s);
+                        s = "";
+                        product.Add(tenproduct.ToList());
+                        tenproduct.RemoveRange(0, tenproduct.Count);
+                    }
+                    else s += ten[i];
+
+                    if (i == ten.Length - 1)
+                    {
+                        tenproduct.Add(s);
+                        product.Add(tenproduct);
+                    }
+                }
+            }
+            return product;
+        }
+
+        
+
+        public static string[] lol(string v)
+        {
+            string[] rezult = new string[3];
+            SparseMatrix m = MatrixC.arrayGates[v];
+            SparseMatrix mat = new SparseMatrix(2, 2);
+            for(int i = 0; i < m.ColumnCount;i++)
+            {
+                for(int j = 0; j< m.ColumnCount; j++)
+                {
+                    if(j != i && m[i,j] != 0)
+                    {
+                        if(rezult[0] == "")
+                        {
+                            if (i < j)  mat[0, 0] = m[i, j];
+                            else mat[0, 1] = m[i, j];
+                            rezult[0] = i.ToString();
+                        }
+                        else
+                        {
+                            if (i < j) mat[1, 0] = m[i, j];
+                            else mat[1, 1] = m[i, j];
+                            rezult[1] = i.ToString();
+                        }
+                    }
+                }
+            }
+            int l = 0;
+            for (int j = 0; l < 1; j++)
+            {
+                if (!MatrixC.arrayGates.ContainsKey("U" + j.ToString()))
+                {
+                    MatrixC.arrayGates.Add("U" + j.ToString(), mat);
+                    MatrixC.nameGates.Add("U" + j.ToString());
+                    l++;
+                }
+            }
+            return rezult;
         }
     }
 }

@@ -180,6 +180,7 @@ namespace VKR
         {
             DeleteAll();
             PageSchemaDrawing();
+            if (vneshProductTb.Text != "") TeninShem(vneshProductTb.Text);
             tensorProductTb.Text = "";
             vneshProductTb.Text = "";
             matrixTb = new TextBox[0];
@@ -497,6 +498,45 @@ namespace VKR
         private void DeleteAll_Clic(object sender, RoutedEventArgs e)
         {
             DeleteAll();
+        }
+
+        private void TeninShem(string ten)
+        {
+            int numberWires = 0, numberColumns = 0;
+            List<List<string>> product = Products.TeninLst(ten);
+            for (int i = 0; i < product.Count; i++)
+            {
+                if (product[i].Count != 1 || MatrixC.arrayGates[product[i][0]].ColumnCount == 2)
+                {
+                    numberWires = product[i].Count;
+                    numberColumns++;
+                }
+                else
+                {
+                    List<string> lst = Products.Grey(Products.lol(product[i][0])[0], Products.lol(product[i][0])[0]);
+                    numberWires = (int)Math.Pow(2, lst[0].Length);
+                    numberColumns = lst.Count - 1;
+                }
+                
+            }
+            numberColumnsTb.Text = numberColumns.ToString();
+            numberWiresTb.Text = numberWires.ToString();
+            int k = 0; 
+            for (int i = 0; i < product.Count; i++)
+            {
+                if (product[i].Count != 1 || MatrixC.arrayGates[product[i][0]].ColumnCount == 2)
+                {
+                    for (int j = 0; j < product[i].Count; j++)
+                    {
+                        schemaCb[j*numberColumns+i].Text = product[i][j];
+                        k++;
+                    }
+                }
+                else
+                {
+
+                }
+            }
         }
     }
 }
