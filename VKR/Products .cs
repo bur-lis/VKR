@@ -7,7 +7,7 @@ using MathNet.Numerics.LinearAlgebra.Complex;
 using System.Numerics;
 namespace VKR
 {
-    class Products
+    static class Products
     {
         public static SparseMatrix VNinMat(string vnesh)
         {
@@ -60,8 +60,11 @@ namespace VKR
             string resultTen = "";
             for (int i  = 0; i< mat.Count; i++)
             {
-                for(int j = 0; j< MatrixC.arrayGates.Count; j++)
-                    if(MatrixC.arrayGates.ElementAt(j).Value == mat[i])
+                Console.Write(mat[0]);
+                Console.Write(MatrixC.arrayGates["U0"]);
+                bool b = (MatrixC.arrayGates["U0"].Equals(mat[0]));
+                for (int j = 0; j< MatrixC.arrayGates.Count; j++)
+                    if(MatrixC.arrayGates.ElementAt(j).Value.Equals(mat[i]))
                     {
                         resultTen += MatrixC.arrayGates.ElementAt(j).Key + "*";
                     }
@@ -103,6 +106,7 @@ namespace VKR
 
         public static List<string> Grey(string startStr, string resultStr)
         {
+
             List<string> resultList = new List<string>();
             resultList.Add(startStr);
             for (int i = 0; i < startStr.Length; i++)
@@ -113,7 +117,6 @@ namespace VKR
                     resultList.Add(startStr);
                 }
             }
-            resultList.Add(startStr);
             return resultList;
         }
 
@@ -163,31 +166,44 @@ namespace VKR
                 {
                     if(j != i && m[i,j] != 0)
                     {
-                        if(rezult[0] == "")
+                        if(rezult[0] == null)
                         {
-                            if (i < j)  mat[0, 0] = m[i, j];
-                            else mat[0, 1] = m[i, j];
+                            mat[0, 0] = m[j, j];
+                            mat[0, 1] = m[i, j];
                             rezult[0] = i.ToString();
                         }
                         else
                         {
-                            if (i < j) mat[1, 0] = m[i, j];
-                            else mat[1, 1] = m[i, j];
+                            mat[1, 0] = m[i, j];
+                            mat[1, 1] = m[i, i];
                             rezult[1] = i.ToString();
                         }
                     }
                 }
             }
             int l = 0;
-            for (int j = 0; l < 1; j++)
+            if (MatrixC.arrayGates.ContainsValue(mat))
             {
-                if (!MatrixC.arrayGates.ContainsKey("U" + j.ToString()))
+                while (rezult[2] != "")
                 {
-                    MatrixC.arrayGates.Add("U" + j.ToString(), mat);
-                    MatrixC.nameGates.Add("U" + j.ToString());
-                    l++;
+                    if (MatrixC.arrayGates.ElementAt(l).Value == mat)
+                        rezult[2] = MatrixC.arrayGates.ElementAt(l).Key;
                 }
             }
+            else
+            {
+                for (int j = 0; l < 1; j++)
+                {
+                    if (!MatrixC.arrayGates.ContainsKey("U" + j.ToString()))
+                    {
+                        MatrixC.arrayGates.Add("U" + j.ToString(), mat);
+                        MatrixC.nameGates.Add("U" + j.ToString());
+                        rezult[2] = "U" + j.ToString();
+                        l++;
+                    }
+                }
+            }
+            
             return rezult;
         }
     }

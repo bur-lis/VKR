@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace VKR
 {
-    class Schema
+    static class Schema
     {
         public static string PtoTen(int wiresCount, int columnCount, ComboBox[] cbs)
         {

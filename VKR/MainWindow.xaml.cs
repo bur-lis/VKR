@@ -86,12 +86,27 @@ namespace VKR
             TextBox[] matrixTb = new TextBox[0];
             TextBox[] newMatrixTb = new TextBox[4];
             ComboBox[] schemaCb = new ComboBox[0];
-      
-        
+            Border b = new Border();
+            Grid newOp = new Grid();
+
+
+
         private void MatrixButton_Click(object sender, RoutedEventArgs e)
         {
             DeleteAll();
+
             Page_Matrix_Drawing();
+            MatrixBR.BorderThickness = new Thickness(0, 0, 0, 1);
+            MatrixButton.Style = (Style)FindResource("Click");
+            BasicElementsBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            BasicElementsButton.Style = (Style)FindResource("Button");
+            ProductsBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            ProductsButton.Style = (Style)FindResource("Button");
+            SchemaBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            SchemaButton.Style = (Style)FindResource("Button");
+            OperatorBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            OperatorButton.Style = (Style)FindResource("Button");
+
 
             try
             {
@@ -141,9 +156,9 @@ namespace VKR
             sizeMatrixLb.Height = 30;
             sizeMatrixLb.HorizontalAlignment = HorizontalAlignment.Left;
             sizeMatrixLb.VerticalAlignment = VerticalAlignment.Top;
-            sizeMatrixLb.Margin = new Thickness(10, 5, 0, 15);
+            sizeMatrixLb.Margin = new Thickness(10, 15, 0, 15);
             sizeMatrixLb.Content = "Введите размер матрицы:";
-            sizeMatrixTb.Margin = new Thickness(210, 10, 0, 15);
+            sizeMatrixTb.Margin = new Thickness(210, 20, 0, 15);
 
             sizeMatrixTb.TextChanged += MatrixDrawing;
             sizeMatrixTb.TextInput += MatrixDrawing;
@@ -156,7 +171,7 @@ namespace VKR
             {
                 int sizeMatrix,
                     rightIndent = 190,
-                    topIndent = 15,
+                    topIndent = 25,
                     tbTextInt = Convert.ToInt32(sizeMatrixTb.Text);
 
                 sizeMatrix = tbTextInt * tbTextInt;
@@ -180,6 +195,20 @@ namespace VKR
         {
             DeleteAll();
             PageSchemaDrawing();
+            
+            MatrixBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            ProductsButton.Style = (Style)FindResource("Button");
+            BasicElementsBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            ProductsButton.Style = (Style)FindResource("Button");
+            ProductsBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            ProductsButton.Style = (Style)FindResource("Button");
+            SchemaBR.BorderThickness = new Thickness(0, 0, 0, 1);
+            SchemaButton.Style = (Style)FindResource("Click");
+            OperatorBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            ProductsButton.Style = (Style)FindResource("Button");
+
+
+
             if (vneshProductTb.Text != "") TeninShem(vneshProductTb.Text);
             tensorProductTb.Text = "";
             vneshProductTb.Text = "";
@@ -290,8 +319,6 @@ namespace VKR
             numberColumnsTb.Height = 20;
             numberColumnsTb.Margin = new Thickness(450, 45, 10, 15);
             numberColumnsTb.TextChanged += SchemaDrawing;
-
-            NewMatrixDrawing();
         }  
 
         public void NewMatrixDrawing()
@@ -300,56 +327,66 @@ namespace VKR
             Label newMatrixLb = new Label();
             Label newGateLb = new Label();
             Label nameNewGateLb = new Label();
+            b.BorderBrush = new SolidColorBrush(Color.FromRgb(184, 182, 182));
+            b.BorderThickness = new Thickness(1,25,1,1);
+            b.Width = 200;
+            b.Height = 300;
+            b.Child = newOp;
 
-            grid3.Children.Add(addNewMatrixBt);
-            grid3.Children.Add(newMatrixLb);
-            grid3.Children.Add(newGateLb);
-            grid3.Children.Add(nameNewGateLb);
-            grid3.Children.Add(nameNewMatrixTb); 
-             
+            grid2.Children.Add(b);
+            newOp.Children.Add(newMatrixLb);
+            newOp.Children.Add(newGateLb);
+            newOp.Children.Add(nameNewGateLb);
+            newOp.Children.Add(nameNewMatrixTb);
+            
+            b.HorizontalAlignment = HorizontalAlignment.Right;
+            b.VerticalAlignment = VerticalAlignment.Top;
+            b.Background = new SolidColorBrush(Color.FromRgb(238, 238, 238));
+            
+            
+            b.Margin = new Thickness(0, 30,30,0);
+
+
             newGateLb.Width = 200;
             newGateLb.Height = 30;
-            newGateLb.Margin = new Thickness(10, 15, 10, 0);
+            newGateLb.Margin = new Thickness(20, 35, 0, 0);
             newGateLb.Content = "Hовый оператор:";
 
             nameNewGateLb.Width = 100;
             nameNewGateLb.Height = 30;
-            nameNewGateLb.Margin = new Thickness(10, 40, 0, 0);
+            nameNewGateLb.Margin = new Thickness(20, 60, 0, 0);
             nameNewGateLb.Content = "Введите имя:";
 
             newMatrixLb.Width = 170;
             newMatrixLb.Height = 30;
-            newMatrixLb.Margin = new Thickness(10, 75, 10, 5);
+            newMatrixLb.Margin = new Thickness(20, 85, 0, 0);
             newMatrixLb.Content = "Введите матрицу:";
 
             nameNewMatrixTb.Width = 30;
             nameNewMatrixTb.Height = 20;
-            nameNewMatrixTb.HorizontalAlignment = HorizontalAlignment.Center;
-            nameNewMatrixTb.Margin = new Thickness(120, 45, 0, 0);
+            nameNewMatrixTb.Margin = new Thickness(130, 65, 0, 0);
  
-            int rightIndent = 110, topIndent = 70;
+            int rightIndent = 110, topIndent = 120;
             newMatrixTb = new TextBox[4];
             for (int i = 0; i < 4; i++)
             {
                 newMatrixTb[i] = new TextBox();
                 newMatrixTb[i].Width = 30;
                 newMatrixTb[i].Height = 20;
-                newMatrixTb[i].HorizontalAlignment = HorizontalAlignment.Left;
                 newMatrixTb[i].VerticalAlignment = VerticalAlignment.Top;
-                newMatrixTb[i].Margin = new Thickness(topIndent, rightIndent, 10, 40);
-                grid3.Children.Add(newMatrixTb[i]);
+                newMatrixTb[i].Margin = new Thickness(rightIndent , topIndent, 0, 0);
+                newOp.Children.Add(newMatrixTb[i]);
                 Grid.SetColumn(newMatrixTb[i], 1);
-                topIndent += 35;
-                if (i == 1) { rightIndent += 25; topIndent = 70; }
+                rightIndent += 35;
+                if (i == 1) { topIndent += 25;  rightIndent = 110; }
             }
-
-            addNewMatrixBt.Height = 30;
-            addNewMatrixBt.Width = 80;
-            addNewMatrixBt.Content = "Добавить";
-            addNewMatrixBt.HorizontalAlignment = HorizontalAlignment.Center;
-            addNewMatrixBt.VerticalAlignment = VerticalAlignment.Top;
-            addNewMatrixBt.Margin = new Thickness(0, 170, 0, 0);
+            Border b1 = new Border();
+            newOp.Children.Add(b1);
+            b1.Child = addNewMatrixBt;
+            b1.Style = (Style)FindResource("AddBorder");
+            addNewMatrixBt.Style = (Style)FindResource("Add");
             addNewMatrixBt.Click += AddNewMatrix_Click;
+
         } 
 
         private void AddNewMatrix_Click(object sender, RoutedEventArgs e)
@@ -372,6 +409,11 @@ namespace VKR
                 newMatrixTb[1].Text = "";
                 newMatrixTb[2].Text = "";
                 newMatrixTb[3].Text = "";
+
+                var arrayGates = MatrixC.arrayGates.Where(x => x.Value.ColumnCount == 2).ToDictionary(i => i.Key, i => i.Value);
+                DrawingElements(arrayGates);
+
+                NewMatrixDrawing();
             }
             catch { }
             
@@ -379,6 +421,18 @@ namespace VKR
 
         private void ProductsButton_Click(object sender, RoutedEventArgs e)
         {
+            MatrixBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            MatrixButton.Style = (Style)FindResource("Button");
+            BasicElementsBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            BasicElementsButton.Style = (Style)FindResource("Button");
+            ProductsBR.BorderThickness = new Thickness(0, 0, 0, 1);
+            ProductsButton.Style = (Style)FindResource("Click");
+            SchemaBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            SchemaButton.Style = (Style)FindResource("Button");
+            OperatorBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            OperatorButton.Style = (Style)FindResource("Button");
+
+
             try
             {
                 if (schemaCb.Length != 0 && numberWiresTb.Text != "" && numberColumnsTb.Text != "")
@@ -404,7 +458,7 @@ namespace VKR
             DeleteAll();
             ProductsDrawing();
             }
-            catch(Exception ex) { MessageBox.Show("Проверьте правельность введенных данных"); Console.WriteLine(ex.StackTrace); }
+            catch(Exception ex) { MessageBox.Show("Проверьте правильность введенных данных"); Console.WriteLine(ex.StackTrace); }
         }
 
         public void ProductsDrawing()
@@ -439,9 +493,62 @@ namespace VKR
 
         private void BasicElements_Click(object sender, RoutedEventArgs e)
         {
+            MatrixBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            MatrixButton.Style = (Style)FindResource("Button");
+            BasicElementsBR.BorderThickness = new Thickness(0, 0, 0, 1);
+            BasicElementsButton.Style = (Style)FindResource("Click");
+            ProductsBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            ProductsButton.Style = (Style)ProductsButton.FindResource("Button");
+            SchemaBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            SchemaButton.Style = (Style)FindResource("Button");
+            OperatorBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            OperatorButton.Style = (Style)FindResource("Button");
+
+
+            var arrayGates = MatrixC.arrayGates.Where(x => x.Value.ColumnCount != 2).ToDictionary(i => i.Key, i => i.Value);
+            DrawingElements(arrayGates);
+        }
+
+        private void DeleteAll()
+        {
+            grid1.Children.Clear();
+            grid2.Children.Clear();
+            b.Child = null;
+            newOp.Children.Clear();
+
+        }
+
+        private void DeleteAll_Clic(object sender, RoutedEventArgs e)
+        {
             DeleteAll();
-            int k = 0, n = 0;
-            for (int i = 0; i< MatrixC.nameGates.Count; i++)
+        }
+
+        private void Operator_Click(object sender, RoutedEventArgs e)
+        {
+            MatrixBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            MatrixButton.Style = (Style)FindResource("Button");
+            BasicElementsBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            BasicElementsButton.Style = (Style)FindResource("Button");
+            ProductsBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            ProductsButton.Style = (Style)FindResource("Button");
+            SchemaBR.BorderThickness = new Thickness(0, 0, 1, 1);
+            SchemaButton.Style = (Style)FindResource("Button");
+            OperatorBR.BorderThickness = new Thickness(0, 0, 0, 1);
+            OperatorButton.Style = (Style)FindResource("Click");
+
+            var arrayGates = MatrixC.arrayGates.Where(x => x.Value.ColumnCount == 2).ToDictionary(i => i.Key, i => i.Value);
+            DrawingElements(arrayGates);
+
+            NewMatrixDrawing();
+        }
+
+        public void DrawingElements(Dictionary<string, SparseMatrix> arrayGates)
+        {
+            int x = (int)grid2.Width;
+            List<string> name = arrayGates.Keys.ToList();
+            DeleteAll();
+            int k = 20, n = 30;
+            for (int i = 0; i < name.Count; i++)
             {
                 Label l = new Label();
                 Label l0 = new Label();
@@ -449,18 +556,18 @@ namespace VKR
                 grid2.Children.Add(l);
                 grid2.Children.Add(l0);
 
-                l.Content = MatrixC.nameGates[i];
+                l.Content = name[i];
                 l0.Content = "=";
 
-                l.Margin  = new Thickness(k, n+ 7, 0, 0);
+                l.Margin = new Thickness(k, n + 7, 0, 0);
                 l0.Margin = new Thickness(k + 45, n + 10, 0, 0);
                 l.FontSize = 25;
                 l0.FontSize = 20;
 
-                SparseMatrix m1 = MatrixC.arrayGates[MatrixC.nameGates[i]];
+                SparseMatrix m1 = MatrixC.arrayGates[name[i]];
                 int columnCount = m1.ColumnCount;
                 int m = k;
-                for (int j = 0; j< columnCount; j++)
+                for (int j = 0; j < columnCount; j++)
                 {
                     for (int q = 0; q < columnCount; q++)
                     {
@@ -472,32 +579,17 @@ namespace VKR
                         newLb.Height = 35;
                         newLb.Width = 80;
                         newLb.Margin = new Thickness(m, n, 0, 0);
-                        newLb.Content = "(" + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][j, q].Real, 2) + ","
-                                            + Math.Round(MatrixC.arrayGates[MatrixC.nameGates[i]][j, q].Imaginary, 2) + ")";
+                        newLb.Content = "(" + Math.Round(arrayGates[name[i]][j, q].Real, 2) + ","
+                                            + Math.Round(arrayGates[name[i]][j, q].Imaginary, 2) + ")";
                     }
                     n += 25;
                     m = k;
                 }
 
-                n = n - (int)25 * columnCount;
-                k += 120*columnCount;
-                if (k + 60 + 80* MatrixC.arrayGates[MatrixC.nameGates[i]].ColumnCount> 640) { n += 50*columnCount; k = 0; }
+                n = n - 25 * columnCount;
+                k += 120 * columnCount;
+                if (k + 60 + 80 * arrayGates[name[i]].ColumnCount > 700) { n += 50 * columnCount; k = 20; }
             }
-                
-        }
-        
-
-        private void DeleteAll()
-        {
-            grid1.Children.Clear();
-            grid2.Children.Clear();
-            grid3.Children.Clear();
-
-        }
-
-        private void DeleteAll_Clic(object sender, RoutedEventArgs e)
-        {
-            DeleteAll();
         }
 
         private void TeninShem(string ten)
@@ -513,9 +605,13 @@ namespace VKR
                 }
                 else
                 {
-                    List<string> lst = Products.Grey(Products.lol(product[i][0])[0], Products.lol(product[i][0])[0]);
+                    string start = Convert.ToString(Convert.ToInt32(Products.lol(product[i][0])[0]), 2);
+                    string finish = Convert.ToString(Convert.ToInt32(Products.lol(product[i][0])[1]), 2);
+                    int zero = finish.Length - start.Length;
+                    string m = start.PadLeft(zero+1, '0');
+                    List<string> lst = Products.Grey(start.PadLeft(zero, '0'), finish);
                     numberWires = (int)Math.Pow(2, lst[0].Length);
-                    numberColumns = lst.Count - 1;
+                    numberColumns = lst.Count*2 - 3;
                 }
                 
             }
@@ -538,5 +634,7 @@ namespace VKR
                 }
             }
         }
+
+        ////////////////////////////////////////////
     }
 }

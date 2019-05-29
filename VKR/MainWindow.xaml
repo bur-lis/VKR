@@ -5,89 +5,100 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VKR"
         mc:Ignorable="d"
-        Icon="C:\Users\byrak\source\repos\VKR\VKR\мм.jpg"
-        Title="Eeee" Height="550"  Width="1010"  WindowStyle="None"  ResizeMode="NoResize" Background="#FFBFBEBE"  ><!--WindowStyle="None" ResizeMode="NoResize"-->
-
-
+        Icon="C:\Users\byrak\source\repos\VKR\VKR\science-vector-png-7.png"
+        Title="Eeee" Height="550"  Width="1010"  WindowStyle="None" 
+        ResizeMode="NoResize" Background="#FFBFBEBE">
     <Window.Resources/>
 
 
     <Grid  Background="#f3f3f3">
-        
-
         <Grid.ColumnDefinitions>
-            <ColumnDefinition  Width="1.2*"></ColumnDefinition>
-            <ColumnDefinition Width="4*"></ColumnDefinition>
-            <ColumnDefinition  Width="*"></ColumnDefinition>
+            <ColumnDefinition MinWidth="150" MaxWidth="250"  Width="1.2*"/>
+            <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="10"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-
-
         <Grid Grid.Row="0" Grid.ColumnSpan="5" Background="#009687">
-            <Button  x:Name="CloseButton" HorizontalAlignment="Right"
-                    Click="CloseButton_Click" Style="{StaticResource Close}" >
-                <ContentElement>
-                    
-                </ContentElement>
+
+            <WrapPanel>
+                <Image Margin="3" Source="C:\Users\byrak\source\repos\VKR\VKR\science-vector-png-7.png"/>
+
+                <Button x:Name="File" Width="60"   Style="{StaticResource MenuPanel}">
+                <TextBlock >Файл</TextBlock>
             </Button>
-            <Button Width="40" x:Name="MaximizeButton" Content="Restore"  HorizontalAlignment="Right" Margin=" 0 0 40 0"
-                    Click="MaximizeButton_Click" Style="{StaticResource Maximize}"
-                    DockPanel.Dock="Right" Foreground="{x:Null}" />
-            <Button Width="40" x:Name="MinButton" Content="Min" HorizontalAlignment="Right" Margin=" 0 0 80 0"
-                    Click="MinimizeButton_Click"
-                    DockPanel.Dock="Right" />
+            <Button x:Name="Information"   Style="{StaticResource MenuPanel}">
+                <TextBlock>Справка</TextBlock>
+            </Button>
+            <Button x:Name="del1"   Click="DeleteAll_Clic" Style="{StaticResource MenuPanel}">
+                <TextBlock >Отчистить</TextBlock>
+            </Button>
+            </WrapPanel>
+
+
+            <WrapPanel HorizontalAlignment="Right">
+            <Button x:Name="MinButton"  Style="{StaticResource Min}"
+                                        Click="MinimizeButton_Click"/>
+            
+            <Button x:Name="MaximizeButton" Content="Restore"
+                                            Click="MaximizeButton_Click"
+                                            Style="{StaticResource Maximize}"/>
+
+            <Button  x:Name="CloseButton" Click="CloseButton_Click" Style="{StaticResource Close}"/>
+            </WrapPanel>
+
         </Grid>
 
-        <Border   Grid.Row="1" Grid.Column="0" Background="#eeeeee" BorderBrush="#FFB8B6B6" BorderThickness="0 0 1 0"/>
+        <StackPanel  Background="#eeeeee" Grid.Column="0" Grid.Row="1" >
+            <Border   Height="10"  Grid.Row="1" Grid.Column="0" 
+                      Background="#eeeeee" BorderBrush="#FFB8B6B6" BorderThickness="0 0 1 0"/>
 
-
-        <Grid Background="#eeeeee" Grid.Column="0" Grid.Row="2" >
-
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"></RowDefinition>
-                <RowDefinition Height="1.5*"></RowDefinition>
-                <RowDefinition Height="1.5*"></RowDefinition>
-                <RowDefinition Height="1.5*"></RowDefinition>
-                <RowDefinition Height="12*"></RowDefinition>
-            </Grid.RowDefinitions>
-
-            <Border   Grid.Row="0" BorderBrush="#FFB8B6B6" BorderThickness="0 0 1 1">
-                <Button Name="MatrixButton"  Content="Матрицy"   Click="MatrixButton_Click" />
+            <Border Name="MatrixBR" BorderThickness="0 0 1 1">
+                <Button Name="MatrixButton" Content="Матрица"   
+                                            Click="MatrixButton_Click"
+                                            Style="{StaticResource Button}"/>
             </Border>
-            <Border   Grid.Row="1" BorderBrush="#FFB8B6B6" BorderThickness="0 0 1 1">
-                <Button Name="SchemaButton"  Content="Схемy"  Click="SchemaButton_Click"/>
+            <Border Name="SchemaBR" BorderThickness="0 0 1 1">
+                <Button Name="SchemaButton"  Content="Схема" 
+                                             Click="SchemaButton_Click"
+                                             Style="{StaticResource Button}"/>
             </Border>
-            <Border   Grid.Row="2" BorderBrush="#FFB8B6B6" BorderThickness="0 0 1 1">
-                <Button Name="ProductsButton"  Content="Произведения" Click="ProductsButton_Click" />
+            <Border Name="ProductsBR" BorderThickness="0 0 1 1">
+                <Button Name="ProductsButton"  Content="Произведения"
+                                               Click="ProductsButton_Click"
+                                               Style="{StaticResource Button}"/>
             </Border>
-            <Border   Grid.Row="3" BorderBrush="#FFB8B6B6" BorderThickness="0 0 1 1">
-                <Button Name="BasicElements"   Content="Основные элементы" Click="BasicElements_Click"/>
+            <Border BorderThickness="0 0 1 1">
+                <Button Name="Razkj"   Content="Разложения" Style="{StaticResource Button}"/>
             </Border>
-            <Border Grid.Row="4" BorderBrush="#FFB8B6B6" BorderThickness="0 0 1 0">
-                <Grid>
-                    <Button Grid.Row="8" VerticalAlignment="Bottom" Height="40"  Name="del1" Margin="25"  Content="Отчистить" Click="DeleteAll_Clic"/>
-                </Grid>
-            </Border>
-        </Grid>
+            <Border BorderThickness="0 0 1 0" Height="45"/>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="2" Grid.RowSpan="8" >
+            <Border Name="OperatorBR" BorderThickness="0 0 1 1">
+                <Button Name="OperatorButton" Content="Операторы"
+                                               Click="Operator_Click"
+                                               Style="{StaticResource Button}"/>
+            </Border>
+            <Border Name="BasicElementsBR"  BorderThickness="0 0 1 1">
+                <Button Name="BasicElementsButton" Content="Основные элементы"
+                                                   Click="BasicElements_Click"
+                                                   Style="{StaticResource Button}"/>
+            </Border>
+            
+            
+            <Border BorderThickness="0 0 1 0" Height="200"/>
+        </StackPanel>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto"
+                      Grid.Column="1" Grid.Row="2" Grid.RowSpan="8" >
             <Grid>
-                
                 <Grid Name="grid1" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" />
                 <Grid Name="grid2" Grid.Column="1" Grid.Row="4" Grid.RowSpan="8" />
             </Grid>
-
         </ScrollViewer>
-
-        <Grid Name="grid3" Grid.Column="2" Grid.Row="2" Grid.RowSpan="8" />
 
     </Grid>
 </Window>

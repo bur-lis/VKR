@@ -10,12 +10,30 @@ using System.Windows.Controls;
 
 namespace VKR
 {
-    class MatrixC
+    static class  MatrixC
     {
-        public static List<string> nameGates = new List<string> { "X", "Y", "Z", "H", "T" };
+        static List<string> _nameGates = new List<string> { "X", "Y", "Z", "H", "T", "I","S" };
+
+        public static void addGate(string S)
+        {
+            _nameGates.Add(S);
+        }
+
+        public static List<string> nameGates
+        {
+            get
+            {
+                return _nameGates;
+            }
+            set
+            {
+                _nameGates = value;
+            }
+        }
 
         public static Dictionary<string, SparseMatrix> arrayGates = new Dictionary<string, SparseMatrix>()
         { {"I", SparseMatrix.OfArray(new Complex[,] { { 1, 0 }, { 0, 1 } }) },
+          {"S", SparseMatrix.OfArray(new Complex[,] { { 1, 0 }, { 0, new Complex(0, 1) } }) },
           {"X", SparseMatrix.OfArray(new Complex[,] { { 0, 1 }, { 1, 0 } }) },
           {"Y",SparseMatrix.OfArray(new Complex[,] { { 0, new Complex(0, -1) },{ new Complex(0, 1), 0 } }) } ,
           {"Z",SparseMatrix.OfArray(new Complex[,] { { 1, 0 }, {0, -1 } }) },
@@ -49,7 +67,7 @@ namespace VKR
             {
                 if (lol1.Contains(binaryNumbers[i]))
                 {
-                    SparseMatrix[] mas = binaryNumbers[i].ToArray().Select(x => charToMat(x)).ToArray();
+                    SparseMatrix[] mas = binaryNumbers[i].Select(x => charToMat(x)).ToArray();
                     Console.WriteLine(mas);
                     mas[ v - numberYpr - 1] = arrayGates[znach[0]] * mas[v - 1 - numberYpr];
                     var a = mas.Aggregate((x, y) => (SparseMatrix)x.KroneckerProduct(y)).EnumerateColumns().ElementAt(0);
@@ -57,7 +75,7 @@ namespace VKR
                 }
                 else
                 {
-                    var a = binaryNumbers[i].ToArray().Select(x => charToMat(x)).Aggregate((x, y) => (SparseMatrix)x.KroneckerProduct(y)).EnumerateColumns().ElementAt(0);
+                    var a = binaryNumbers[i].Select(x => charToMat(x)).Aggregate((x, y) => (SparseMatrix)x.KroneckerProduct(y)).EnumerateColumns().ElementAt(0);
                     matrix.SetColumn(i, a);
                 }
             }
@@ -112,6 +130,8 @@ namespace VKR
                     matrix[i, j] = StrinComplex(b[i * size + j].Text);
                 }
             }
+            //if (UnitMatrix(matrix)) return matrix;
+            //else return new SparseMatrix(0,0);
             return matrix;
         }
 
@@ -146,8 +166,7 @@ namespace VKR
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
-                    if (matrix[i, j] != 0) result += matrix[i, j].ToString() + 
-                                                     "|" + binaryNumbers[i] + "><" + binaryNumbers[j] + "|" + " + ";
+                    if (matrix[i, j] != 0) result += matrix[i, j].ToString() + "|" + binaryNumbers[i] + "><" + binaryNumbers[j] + "|" + " + ";
             }
             if (result == "") return "";
             return result.Substring(0, result.Length - 2); ;
@@ -192,13 +211,16 @@ namespace VKR
             {
                 Console.Write(c);
                 int l = 0;
-                for (int j = 0; l < 1; j++)
+                if (!MatrixC.arrayGates.ContainsValue(c))
                 {
-                    if (!MatrixC.arrayGates.ContainsKey("U" + j.ToString()))
+                    for (int j = 0; l < 1; j++)
                     {
-                        MatrixC.arrayGates.Add("U" + j.ToString(), c);
-                        MatrixC.nameGates.Add("U" + j.ToString());
-                        l++;
+                        if (!MatrixC.arrayGates.ContainsKey("U" + j.ToString()))
+                        {
+                            MatrixC.arrayGates.Add("U" + j.ToString(), c);
+                            MatrixC.nameGates.Add("U" + j.ToString());
+                            l++;
+                        }
                     }
                 }
             }
@@ -206,6 +228,18 @@ namespace VKR
             return resultmatrix1;
         }
 
+        public static bool UnitMatrix(SparseMatrix mat)
+        {
+            Complex coloumn = new Complex();
+            Complex row = new Complex();
 
+            for (int i = 0; i< mat.ColumnCount; i++)
+            {
+                coloumn += mat[i, mat.ColumnCount - i];
+                row += mat[mat.ColumnCount - i, i];
+            }
+           // if ((new Complex(1, 0) - row). new Complex(0.5,0) && Math.Abs(1 - Convert.ToDouble(coloumn)) < 0.5) return true;
+            return false;
+        }
     }
 }

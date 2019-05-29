@@ -112,13 +112,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="x..png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="мм.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="drawing.svg" />
+    <Resource Include="science-vector-png-7.png" />
+    <Resource Include="unnamed.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
