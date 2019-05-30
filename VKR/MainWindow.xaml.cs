@@ -607,17 +607,20 @@ namespace VKR
                 {
                     string start = Convert.ToString(Convert.ToInt32(Products.lol(product[i][0])[0]), 2);
                     string finish = Convert.ToString(Convert.ToInt32(Products.lol(product[i][0])[1]), 2);
-                    int zero = finish.Length - start.Length;
-                    string m = start.PadLeft(zero+1, '0');
-                    List<string> lst = Products.Grey(start.PadLeft(zero, '0'), finish);
-                    numberWires = (int)Math.Pow(2, lst[0].Length);
-                    numberColumns = lst.Count*2 - 3;
+
+                    int y = (int)Math.Sqrt(MatrixC.arrayGates[product[i][0]].ColumnCount);
+                    if (MatrixC.arrayGates[product[i][0]].ColumnCount == 8) y = 3;
+                    string q = start.PadLeft(y, '0');
+                    string u = finish.PadLeft(y, '0');
+                    List<string> lst = Products.Grey(q, u);
+                    int p = lst.Count;
+                    numberColumns += (p-2)*2 + 1;
+                    numberWires = y;
                 }
                 
             }
             numberColumnsTb.Text = numberColumns.ToString();
             numberWiresTb.Text = numberWires.ToString();
-            int k = 0; 
             for (int i = 0; i < product.Count; i++)
             {
                 if (product[i].Count != 1 || MatrixC.arrayGates[product[i][0]].ColumnCount == 2)
@@ -625,12 +628,56 @@ namespace VKR
                     for (int j = 0; j < product[i].Count; j++)
                     {
                         schemaCb[j*numberColumns+i].Text = product[i][j];
-                        k++;
                     }
                 }
                 else
                 {
+                    string u1 = Products.lol(product[i][0])[2];
+                    int y = (int)Math.Sqrt(MatrixC.arrayGates[product[i][0]].ColumnCount);
+                    if (MatrixC.arrayGates[product[i][0]].ColumnCount == 8) y = 3;
+                    string q = Convert.ToString(Convert.ToInt32(Products.lol(product[i][0])[0]), 2).PadLeft(y, '0');
+                    string u = Convert.ToString(Convert.ToInt32(Products.lol(product[i][0])[1]), 2).PadLeft(y, '0');
+                    List<string> lst = Products.Grey(q, u);
+                    int k = 0;
+                    for (int j = 0; j < lst.Count - 1; j++)
+                    {
+                        int r = 0;
+                        for (int w = 0; w < lst[j].Length; w++)
+                            if (lst[j][w] != lst[j + 1][w]) r = lst[j].Length - 1 - w;
 
+                        for (int w = 0; w < lst[j].Length; w++)
+                        {
+                            if (lst[j][w] == lst[j + 1][w] && lst[j + 1][w] == '0') schemaCb[w * numberColumns + i + j].Text = "V" + r.ToString();
+                            else
+                            {
+                                if (lst[j][w] == lst[j + 1][w] && lst[j + 1][w] == '1') schemaCb[w * numberColumns + i + j].Text = "W" + r.ToString();
+                                else
+                                     if (j + 1 == lst.Count - 1) { schemaCb[w * numberColumns + i + j].Text = u1; k = j+1; }
+                                else schemaCb[w * numberColumns + i + j].Text = "X";
+                            }
+
+                        }
+                    }
+                    lst.RemoveAt(lst.Count - 1);
+                    lst.Reverse();
+                    for (int j = 0; j < lst.Count - 1; j++)
+                    {
+                        int r = 0;
+                        for (int w = 0; w < lst[j].Length; w++)
+                            if (lst[j][w] != lst[j + 1][w]) r = lst[j].Length - 1 - w;
+
+                        for (int w = 0; w < lst[j].Length; w++)
+                        {
+                            if (lst[j][w] == lst[j + 1][w] && lst[j + 1][w] == '0') schemaCb[w * numberColumns + i + j +k].Text = "V" + r.ToString();
+                            else
+                            {
+                                if (lst[j][w] == lst[j + 1][w] && lst[j + 1][w] == '1') schemaCb[w * numberColumns + i + j+k].Text = "V" + r.ToString();
+                                else schemaCb[w * numberColumns + i + j+k].Text = "X";
+                            }
+
+                        }
+
+                    }
                 }
             }
         }

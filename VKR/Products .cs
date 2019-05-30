@@ -153,20 +153,20 @@ namespace VKR
             return product;
         }
 
-        
+
 
         public static string[] lol(string v)
         {
             string[] rezult = new string[3];
             SparseMatrix m = MatrixC.arrayGates[v];
             SparseMatrix mat = new SparseMatrix(2, 2);
-            for(int i = 0; i < m.ColumnCount;i++)
+            for (int i = 0; i < m.ColumnCount; i++)
             {
-                for(int j = 0; j< m.ColumnCount; j++)
+                for (int j = 0; j < m.ColumnCount; j++)
                 {
-                    if(j != i && m[i,j] != 0)
+                    if (j != i && m[i, j] != 0)
                     {
-                        if(rezult[0] == null)
+                        if (rezult[0] == null)
                         {
                             mat[0, 0] = m[j, j];
                             mat[0, 1] = m[i, j];
@@ -181,13 +181,20 @@ namespace VKR
                     }
                 }
             }
+            Console.Write(m);
+
             int l = 0;
+            Console.Write( "ksdhfklsdgh");
+            Console.Write(rezult[1] + "!!!!!!!!!!!!!1");
             if (MatrixC.arrayGates.ContainsValue(mat))
             {
-                while (rezult[2] != "")
+                //Console.Write(MatrixC.arrayGates["U1"]);
+                //Console.Write(mat);
+                while (rezult[2] == null)
                 {
-                    if (MatrixC.arrayGates.ElementAt(l).Value == mat)
+                    if (MatrixC.arrayGates.ElementAt(l).Value.Equals(mat))
                         rezult[2] = MatrixC.arrayGates.ElementAt(l).Key;
+                    else l++;
                 }
             }
             else

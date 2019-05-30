@@ -10,7 +10,7 @@
         ResizeMode="NoResize" Background="#FFBFBEBE">
     <Window.Resources/>
 
-
+    <Border BorderThickness="0.7">
     <Grid  Background="#f3f3f3">
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="150" MaxWidth="250"  Width="1.2*"/>
@@ -22,37 +22,40 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Grid.ColumnSpan="5" Background="#009687">
+            <Border BorderThickness="0 0 0 1" Grid.ColumnSpan="2">
+                <Grid Grid.Row="0" Grid.ColumnSpan="5" Background="#009687">
 
-            <WrapPanel>
-                <Image Margin="3" Source="C:\Users\byrak\source\repos\VKR\VKR\science-vector-png-7.png"/>
+                    <WrapPanel>
+                        <Image Margin="3" 
+                       Source="C:\Users\byrak\source\repos\VKR\VKR\science-vector-png-7.png"/>
 
-                <Button x:Name="File" Width="60"   Style="{StaticResource MenuPanel}">
-                <TextBlock >Файл</TextBlock>
-            </Button>
-            <Button x:Name="Information"   Style="{StaticResource MenuPanel}">
-                <TextBlock>Справка</TextBlock>
-            </Button>
-            <Button x:Name="del1"   Click="DeleteAll_Clic" Style="{StaticResource MenuPanel}">
-                <TextBlock >Отчистить</TextBlock>
-            </Button>
-            </WrapPanel>
+                        <Button x:Name="File" Width="60"   Style="{StaticResource MenuPanel}">
+                            <TextBlock >Файл</TextBlock>
+                        </Button>
+                        <Button x:Name="Information"   Style="{StaticResource MenuPanel}">
+                            <TextBlock>Справка</TextBlock>
+                        </Button>
+                        <Button x:Name="del1"   Click="DeleteAll_Clic" Style="{StaticResource MenuPanel}">
+                            <TextBlock >Отчистить</TextBlock>
+                        </Button>
+                    </WrapPanel>
 
 
-            <WrapPanel HorizontalAlignment="Right">
-            <Button x:Name="MinButton"  Style="{StaticResource Min}"
+                    <WrapPanel HorizontalAlignment="Right">
+                        <Button x:Name="MinButton"  Style="{StaticResource Min}"
                                         Click="MinimizeButton_Click"/>
-            
-            <Button x:Name="MaximizeButton" Content="Restore"
+
+                        <Button x:Name="MaximizeButton" Content="Restore"
                                             Click="MaximizeButton_Click"
                                             Style="{StaticResource Maximize}"/>
 
-            <Button  x:Name="CloseButton" Click="CloseButton_Click" Style="{StaticResource Close}"/>
-            </WrapPanel>
+                        <Button  x:Name="CloseButton" Click="CloseButton_Click" Style="{StaticResource Close}"/>
+                    </WrapPanel>
 
-        </Grid>
+                </Grid>
+            </Border>
 
-        <StackPanel  Background="#eeeeee" Grid.Column="0" Grid.Row="1" >
+            <StackPanel  Background="#eeeeee" Grid.Column="0" Grid.Row="1" >
             <Border   Height="10"  Grid.Row="1" Grid.Column="0" 
                       Background="#eeeeee" BorderBrush="#FFB8B6B6" BorderThickness="0 0 1 0"/>
 
@@ -67,7 +70,7 @@
                                              Style="{StaticResource Button}"/>
             </Border>
             <Border Name="ProductsBR" BorderThickness="0 0 1 1">
-                <Button Name="ProductsButton"  Content="Произведения"
+                <Button Name="ProductsButton"  Content="Другие представления"
                                                Click="ProductsButton_Click"
                                                Style="{StaticResource Button}"/>
             </Border>
@@ -101,4 +104,5 @@
         </ScrollViewer>
 
     </Grid>
+    </Border>
 </Window>
