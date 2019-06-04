@@ -15,7 +15,7 @@ namespace VKR
         {
             string[] columns = new string[columnCount];
 
-            for (int i = 0; i < cbs.Length; i++) { int k = i % columnCount; columns[k] += cbs[i].Text.ToUpper() + Convert.ToChar(8853); }
+            for (int i = 0; i < cbs.Length; i++) { int k = i % columnCount; columns[k] += cbs[i].Text.ToUpper() + Convert.ToChar(8855); }
             for (int i = 0; i < columns.Length; i++)
             {
                 string[] wires = new string[wiresCount];
@@ -28,7 +28,7 @@ namespace VKR
                 {
                     foreach (char c in columns[i])
                     {
-                        if (c == Convert.ToChar(8853))
+                        if (c == Convert.ToChar(8855))
                         {
                             if (wires[numberGate].IndexOf('W') != -1 || wires[numberGate].IndexOf('V') != -1)
                             {
@@ -38,9 +38,9 @@ namespace VKR
 
                                 if (controls.ContainsKey(numberControlled)) controls[numberControlled].Add(controlling);
                                 else controls.Add(numberControlled, new List<string> { gateControlled, controlling });
-                                columnResult += "I" + Convert.ToChar(8853);
+                                columnResult += "I" + Convert.ToChar(8855);
                             }
-                            else { columnResult += wires[numberGate] + Convert.ToChar(8853); r = wires[numberGate].Length; }
+                            else { columnResult += wires[numberGate] + Convert.ToChar(8855); r = wires[numberGate].Length; }
                             numberGate++;
                         }
                         else wires[numberGate] += c;
@@ -52,7 +52,7 @@ namespace VKR
                     }
                     int l = 0;
                     SparseMatrix matrix = MatrixC.NewU(wiresCount, controls.ElementAt(l).Key, controls[controls.ElementAt(l).Key]);
-                    Regex reg = new Regex("I"+ Convert.ToChar(8853));
+                    Regex reg = new Regex("I"+ Convert.ToChar(8855));
                     if (!MatrixC.arrayGates.ContainsValue(matrix))
                     {
                         for (int j = 0; l < controls.Count; j++)

@@ -98,10 +98,17 @@
                       VerticalScrollBarVisibility="Auto"
                       Grid.Column="1" Grid.Row="2" Grid.RowSpan="8" >
             <Grid>
-                <Grid Name="grid1" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" />
-                <Grid Name="grid2" Grid.Column="1" Grid.Row="4" Grid.RowSpan="8" />
+                    <Grid Name="grid1" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" >
+                        <TextBlock Name="Titl" Style="{StaticResource Titl}"/>
+                        <TextBox Name="Text" Style="{StaticResource Text}"/>
+                        <TextBox Name="MiniTitl" Style="{StaticResource MiniTitl}"/>
+                    </Grid>
+                
+                    <Grid Name="grid2" Grid.Column="1" Grid.Row="4" Grid.RowSpan="8" />
             </Grid>
         </ScrollViewer>
+
+            
 
     </Grid>
     </Border>

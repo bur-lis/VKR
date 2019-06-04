@@ -130,9 +130,8 @@ namespace VKR
                     matrix[i, j] = StrinComplex(b[i * size + j].Text);
                 }
             }
-            //if (UnitMatrix(matrix)) return matrix;
-            //else return new SparseMatrix(0,0);
-            return matrix;
+            if (((SparseMatrix)matrix.ConjugateTranspose()* matrix).Equals(SparseMatrix.CreateDiagonal(size,size,1))) return matrix;
+            else return new SparseMatrix(0,0);
         }
 
         public static Complex StrinComplex(string sourceStr)

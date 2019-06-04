@@ -89,48 +89,63 @@ namespace VKR
             Border b = new Border();
             Grid newOp = new Grid();
 
-
-
         private void MatrixButton_Click(object sender, RoutedEventArgs e)
         {
-            DeleteAll();
-
-            Page_Matrix_Drawing();
-            MatrixBR.BorderThickness = new Thickness(0, 0, 0, 1);
-            MatrixButton.Style = (Style)FindResource("Click");
-            BasicElementsBR.BorderThickness = new Thickness(0, 0, 1, 1);
-            BasicElementsButton.Style = (Style)FindResource("Button");
-            ProductsBR.BorderThickness = new Thickness(0, 0, 1, 1);
-            ProductsButton.Style = (Style)FindResource("Button");
-            SchemaBR.BorderThickness = new Thickness(0, 0, 1, 1);
-            SchemaButton.Style = (Style)FindResource("Button");
-            OperatorBR.BorderThickness = new Thickness(0, 0, 1, 1);
-            OperatorButton.Style = (Style)FindResource("Button");
+            
 
 
             try
             {
                 if (tensorProductTb.Text != "") ShowMatrix(Products.VNinMat(tensorProductTb.Text));
+                else if (vneshProductTb.Text != "") ShowMatrix(Products.TeninMat(vneshProductTb.Text));
+                else if (schemaCb.Length != 0 && numberWiresTb.Text != "" && numberColumnsTb.Text != "")
+                {
+                    int wires = Convert.ToInt32(numberWiresTb.Text),
+                           columns = Convert.ToInt32(numberColumnsTb.Text);
+                    string ten = Schema.PtoTen(wires, columns, schemaCb);
+                    ShowMatrix(Products.TeninMat(ten));
+
+                    numberWiresTb.Text = "";
+                    numberColumnsTb.Text = "";
+                }
                 else
                 {
-                  if (vneshProductTb.Text != "") ShowMatrix(Products.TeninMat(vneshProductTb.Text));
+                    DeleteAll();
+                    Page_Matrix_Drawing();
                 }
 
-                
+                MatrixBR.BorderThickness = new Thickness(0, 0, 0, 1);
+                MatrixButton.Style = (Style)FindResource("Click");
+                BasicElementsBR.BorderThickness = new Thickness(0, 0, 1, 1);
+                BasicElementsButton.Style = (Style)FindResource("Button");
+                ProductsBR.BorderThickness = new Thickness(0, 0, 1, 1);
+                ProductsButton.Style = (Style)FindResource("Button");
+                SchemaBR.BorderThickness = new Thickness(0, 0, 1, 1);
+                SchemaButton.Style = (Style)FindResource("Button");
+                OperatorBR.BorderThickness = new Thickness(0, 0, 1, 1);
+                OperatorButton.Style = (Style)FindResource("Button");
 
-               numberWiresTb.Text = "";
-                numberColumnsTb.Text = "";
+
                 nameNewMatrixTb.Text = "";
                 tensorProductTb.Text = "";
                 vneshProductTb.Text = "";
                 schemaCb = new ComboBox[0];
                 newMatrixTb = new TextBox[0];
+                
+
             }
-            catch { }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Проверьте правильность введенных данных");
+                Console.WriteLine(ex.StackTrace);
+
+            }
         }
 
         public void ShowMatrix(SparseMatrix matrix)
         {
+            DeleteAll();
+            Page_Matrix_Drawing();
             sizeMatrixTb.Text = matrix.ColumnCount.ToString();
             
             Console.Write(matrix);
@@ -193,27 +208,53 @@ namespace VKR
         
         private void SchemaButton_Click(object sender, RoutedEventArgs e)
         {
-            DeleteAll();
-            PageSchemaDrawing();
+           
             
-            MatrixBR.BorderThickness = new Thickness(0, 0, 1, 1);
-            ProductsButton.Style = (Style)FindResource("Button");
-            BasicElementsBR.BorderThickness = new Thickness(0, 0, 1, 1);
-            ProductsButton.Style = (Style)FindResource("Button");
-            ProductsBR.BorderThickness = new Thickness(0, 0, 1, 1);
-            ProductsButton.Style = (Style)FindResource("Button");
-            SchemaBR.BorderThickness = new Thickness(0, 0, 0, 1);
-            SchemaButton.Style = (Style)FindResource("Click");
-            OperatorBR.BorderThickness = new Thickness(0, 0, 1, 1);
-            ProductsButton.Style = (Style)FindResource("Button");
+            
+
+            try
+            {
+                
+                if (vneshProductTb.Text != "") TeninShem(vneshProductTb.Text);
+                else  if (tensorProductTb.Text != "")
+                      TeninShem(Products.twoMatinTen(MatrixC.MatrixTwoLevel(Products.VNinMat(tensorProductTb.Text))));
+                else if (matrixTb.Length != 0)
+                {
+                    string size = sizeMatrixTb.Text;
+                    
+                    string ten = Products.twoMatinTen(MatrixC.MatrixTwoLevel(MatrixC.GetMatrix(matrixTb, Convert.ToInt32(size))));
+                    TeninShem(ten); sizeMatrixTb.Text = "";
+                }
+                else
+                {
+                    DeleteAll();
+                    PageSchemaDrawing();
+                }
+                MatrixBR.BorderThickness = new Thickness(0, 0, 1, 1);
+                ProductsButton.Style = (Style)FindResource("Button");
+                BasicElementsBR.BorderThickness = new Thickness(0, 0, 1, 1);
+                BasicElementsButton.Style = (Style)FindResource("Button");
+                ProductsBR.BorderThickness = new Thickness(0, 0, 1, 1);
+                ProductsButton.Style = (Style)FindResource("Button");
+                SchemaBR.BorderThickness = new Thickness(0, 0, 0, 1);
+                SchemaButton.Style = (Style)FindResource("Click");
+                OperatorBR.BorderThickness = new Thickness(0, 0, 1, 1);
+                ProductsButton.Style = (Style)FindResource("Button");
+
+                tensorProductTb.Text = "";
+                vneshProductTb.Text = "";
+                matrixTb = new TextBox[0];
+                
+            }
+
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Проверьте правильность введенных данных");
+                Console.WriteLine(ex.StackTrace);
+            }
 
 
-
-            if (vneshProductTb.Text != "") TeninShem(vneshProductTb.Text);
-            tensorProductTb.Text = "";
-            vneshProductTb.Text = "";
-            matrixTb = new TextBox[0];
-            sizeMatrixTb.Text = "";
         }
 
         private void SchemaDrawing(object sender, EventArgs e)
@@ -392,28 +433,36 @@ namespace VKR
         private void AddNewMatrix_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
-                SparseMatrix newGateMatrix = new SparseMatrix(2, 2);
-                for (int i = 0; i < 2; i++)
+            { if(!MatrixC.nameGates.Contains(nameNewMatrixTb.Text) && 
+                    nameNewMatrixTb.Text !="" && 
+                    !nameNewMatrixTb.Text.Contains("V") 
+                    && !nameNewMatrixTb.Text.Contains("W") &&
+                     !nameNewMatrixTb.Text.Contains("v")
+                     && !nameNewMatrixTb.Text.Contains("w"))
                 {
-                    for (int j = 0; j < 2; j++)
+                    SparseMatrix newGateMatrix = new SparseMatrix(2, 2);
+                    for (int i = 0; i < 2; i++)
                     {
-                        newGateMatrix[i, j] = MatrixC.StrinComplex(newMatrixTb[i * 2 + j].Text);
+                        for (int j = 0; j < 2; j++)
+                        {
+                            newGateMatrix[i, j] = MatrixC.StrinComplex(newMatrixTb[i * 2 + j].Text);
+                        }
                     }
+                    MatrixC.arrayGates.Add(nameNewMatrixTb.Text.ToUpper(), newGateMatrix);
+                    MatrixC.nameGates.Add(nameNewMatrixTb.Text.ToUpper());
+
+                    nameNewMatrixTb.Text = "";
+                    newMatrixTb[0].Text = "";
+                    newMatrixTb[1].Text = "";
+                    newMatrixTb[2].Text = "";
+                    newMatrixTb[3].Text = "";
+
+                    var arrayGates = MatrixC.arrayGates.Where(x => x.Value.ColumnCount == 2).ToDictionary(i => i.Key, i => i.Value);
+                    DrawingElements(arrayGates);
+
+                    NewMatrixDrawing();
                 }
-                MatrixC.arrayGates.Add(nameNewMatrixTb.Text.ToUpper(), newGateMatrix);
-                MatrixC.nameGates.Add(nameNewMatrixTb.Text.ToUpper());
-
-                nameNewMatrixTb.Text = "";
-                newMatrixTb[0].Text = "";
-                newMatrixTb[1].Text = "";
-                newMatrixTb[2].Text = "";
-                newMatrixTb[3].Text = "";
-
-                var arrayGates = MatrixC.arrayGates.Where(x => x.Value.ColumnCount == 2).ToDictionary(i => i.Key, i => i.Value);
-                DrawingElements(arrayGates);
-
-                NewMatrixDrawing();
+                
             }
             catch { }
             
@@ -421,22 +470,15 @@ namespace VKR
 
         private void ProductsButton_Click(object sender, RoutedEventArgs e)
         {
-            MatrixBR.BorderThickness = new Thickness(0, 0, 1, 1);
-            MatrixButton.Style = (Style)FindResource("Button");
-            BasicElementsBR.BorderThickness = new Thickness(0, 0, 1, 1);
-            BasicElementsButton.Style = (Style)FindResource("Button");
-            ProductsBR.BorderThickness = new Thickness(0, 0, 0, 1);
-            ProductsButton.Style = (Style)FindResource("Click");
-            SchemaBR.BorderThickness = new Thickness(0, 0, 1, 1);
-            SchemaButton.Style = (Style)FindResource("Button");
-            OperatorBR.BorderThickness = new Thickness(0, 0, 1, 1);
-            OperatorButton.Style = (Style)FindResource("Button");
-
-
             try
             {
+                
+
                 if (schemaCb.Length != 0 && numberWiresTb.Text != "" && numberColumnsTb.Text != "")
-                    vneshProductTb.Text = Schema.PtoTen(Convert.ToInt32(numberWiresTb.Text), Convert.ToInt32(numberColumnsTb.Text),schemaCb);
+                {
+                    vneshProductTb.Text = Schema.PtoTen(Convert.ToInt32(numberWiresTb.Text), Convert.ToInt32(numberColumnsTb.Text), schemaCb);
+                    tensorProductTb.Text = MatrixC.MatinVn(Products.TeninMat(Schema.PtoTen(Convert.ToInt32(numberWiresTb.Text), Convert.ToInt32(numberColumnsTb.Text), schemaCb)));
+                }
 
                 if (matrixTb.Length != 0)
                 {
@@ -445,6 +487,16 @@ namespace VKR
 
 
                 }
+                MatrixBR.BorderThickness = new Thickness(0, 0, 1, 1);
+                MatrixButton.Style = (Style)FindResource("Button");
+                BasicElementsBR.BorderThickness = new Thickness(0, 0, 1, 1);
+                BasicElementsButton.Style = (Style)FindResource("Button");
+                ProductsBR.BorderThickness = new Thickness(0, 0, 0, 1);
+                ProductsButton.Style = (Style)FindResource("Click");
+                SchemaBR.BorderThickness = new Thickness(0, 0, 1, 1);
+                SchemaButton.Style = (Style)FindResource("Button");
+                OperatorBR.BorderThickness = new Thickness(0, 0, 1, 1);
+                OperatorButton.Style = (Style)FindResource("Button");
 
 
                 sizeMatrixTb.Text = "";
@@ -458,7 +510,11 @@ namespace VKR
             DeleteAll();
             ProductsDrawing();
             }
-            catch(Exception ex) { MessageBox.Show("Проверьте правильность введенных данных"); Console.WriteLine(ex.StackTrace); }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Проверьте правильность введенных данных");
+                Console.WriteLine(ex.StackTrace);
+            }
         }
 
         public void ProductsDrawing()
@@ -515,6 +571,14 @@ namespace VKR
             grid2.Children.Clear();
             b.Child = null;
             newOp.Children.Clear();
+            numberWiresTb.Text = "";
+            numberColumnsTb.Text = ""; nameNewMatrixTb.Text = "";
+            tensorProductTb.Text = "";
+            vneshProductTb.Text = "";
+            schemaCb = new ComboBox[0];
+            newMatrixTb = new TextBox[0];
+            matrixTb = new TextBox[0];
+            sizeMatrixTb.Text = "";
 
         }
 
@@ -594,6 +658,8 @@ namespace VKR
 
         private void TeninShem(string ten)
         {
+            DeleteAll();
+            PageSchemaDrawing();
             int numberWires = 0, numberColumns = 0;
             List<List<string>> product = Products.TeninLst(ten);
             for (int i = 0; i < product.Count; i++)

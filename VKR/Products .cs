@@ -74,7 +74,7 @@ namespace VKR
             {
                 for(int i = 0; i< (int)(Math.Log(mat[0].ColumnCount)/Math.Log(2.0));i++)
                 {
-                    resultTen += "I" + Convert.ToChar(8853);
+                    resultTen += "I" + Convert.ToChar(8855);
                 }
             }
             return resultTen.Substring(0,resultTen.Length -1);
@@ -127,7 +127,7 @@ namespace VKR
             string s = "";
             for (int i = 0; i < ten.Length; i++)
             {
-                if (ten[i] == '+' || ten[i] == Convert.ToChar(8853))
+                if (ten[i] == '+' || ten[i] == Convert.ToChar(8855))
                 {
                     tenproduct.Add(s);
                     s = "";

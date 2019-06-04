@@ -8,6 +8,67 @@
         <Setter Property="BorderBrush" Value="#B8B6B6"/>
     </Style>
 
+    <Style TargetType="TextBlock" x:Key="Titl">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontFamily" Value="Verdana" />
+        <Setter Property="Foreground" Value="#374137"/>
+        <Setter Property="FontStyle" Value="Italic"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Margin" Value="40"/>
+        <Setter Property="Text" Value="Начальная страница"/>
+    </Style>
+    <Style TargetType="TextBox" x:Key="Text">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="Verdana" />
+        <Setter Property="Foreground" Value="#374137"/>
+        <Setter Property="FontStyle" Value="Italic"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Margin" Value="300 100 0 0"/>
+        <Setter Property="Text" Value="выбирите вкладку, соответствующую представлению, которое вы
+                                 &#x0a;&#x0d; хотите ввести. Затем введите выбранное представление 
+                                 &#x0a;&#x0d;ниже описанным способом. После чего выбирите вкладку с названием
+                                 &#x0a;&#x0d;необходимого представления (для внешнего произведения,
+                                 &#x0a;&#x0d;операторного представления и представления в виде таблицы
+                                 &#x0a;&#x0d;выбирите 'Другие представления'). &#x0a;&#x0a;
+                                 &#x0a;&#x0d;вводятся в виде пары (пример: ввести - (4.3,5), что равняется 4.3+5*i ),
+                                 &#x0a;&#x0d;если отсудствует мнимая часть, то можно просто ввести натуральное 
+                                 &#x0a;&#x0d;число; ноль вводить не обязательно &#x0a;&#x0d;вводится аналогично теории (пример: | 00 ⟩⟨ 00 | + |  11 ⟩⟨ 11 | )
+                                 &#x0a;&#x0d;вводится, с использованием знака '+'"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="MaxWidth" Value="509"/>
+        <Setter Property="Background" Value="#f3f3f3"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+   </Style>
+
+    <Style TargetType="TextBox" x:Key="MiniTitl">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Verdana" />
+        <Setter Property="Foreground" Value="#374137"/>
+        <Setter Property="FontStyle" Value="Italic"/>
+        <!--<Setter Property="TextAlignment" Value="Right"/>-->
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Margin" Value="-500 100 0 0"/>
+        <Setter Property="Text" Value="Для начала работы
+                                 &#x0a;&#x0d;
+                                 &#x0a;&#x0d;
+                                 &#x0a;&#x0d;&#x0a;&#x0d;
+                                 &#x0a;&#x0d; &#x0a;
+                                 &#x0a;&#x0d;Комплексные чисела
+                                 &#x0a;&#x0d;&#x0a;&#x0d;
+                                 &#x0a;&#x0d;Внешнее произведение
+                                 &#x0a;&#x0d;Операторное представление"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="MaxWidth" Value="250"/>
+        <Setter Property="Background" Value="#f3f3f3"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+    </Style>
+
     <Style TargetType="Button" x:Key="Click">
         <Setter Property="Background" Value="#f3f3f3"/>
         <Setter Property="FontFamily" Value="Verdana" />
